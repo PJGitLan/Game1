@@ -19,6 +19,9 @@ namespace Game1
         Player player;
         Level level1;
         float elapsed;
+        Camera camera;
+        SpriteFont font;
+        GameMenu gameMenu;
         // Texture2D pixel;
 
         public Game1()
@@ -37,6 +40,8 @@ namespace Game1
         {
             // TODO: Add your initialization logic here
             GraphicsDevice.Clear(RandomColorGenerator.Next());
+            camera = new Camera(GraphicsDevice.Viewport, new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2));
+            
             
             base.Initialize();
         }
@@ -49,18 +54,20 @@ namespace Game1
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            font = Content.Load<SpriteFont>("font");
+            gameMenu = new GameMenu(font);
 
-            walkingFatManRight = Content.Load<Texture2D>("walkingFatMan");
+            /// Loading level en character
+            /*walkingFatManRight = Content.Load<Texture2D>("walkingFatMan");
             walkingFatManLeft = Content.Load<Texture2D>("walkingFatManLeft");
             grasMudBlock = Content.Load<Texture2D>("isometric_pixel_flat_0014");
             Controller keyboard = new TheKeyBoard();
             level1 = new Level1(grasMudBlock);
-            player = new Player(walkingFatManRight, walkingFatManLeft, new MovementEngine(new Vector2(200,200), new Vector2(0.75f, 0.75f)), keyboard);
+            player = new Player(new AnimationEngine(walkingFatManRight, walkingFatManLeft, 64, 8), new MovementEngine(new Vector2(200,200), new Vector2(0.35f, 0.35f), new Vector2(0.01f, 0.01f)), keyboard);
+            */
 
             // TODO: use this.Content to load your game content here
 
-            //pixel = new Texture2D(GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
-            //pixel.SetData(new[] { Color.White });
         }
 
         /// <summary>
@@ -85,7 +92,8 @@ namespace Game1
 
             elapsed += gameTime.ElapsedGameTime.Milliseconds;
 
-            level1.Update(gameTime);
+            //Level update
+            //level1.Update(gameTime);
 
             if (elapsed > 2000)
             {
@@ -93,7 +101,9 @@ namespace Game1
                 elapsed = 0;
             }
             
-            player.Update(gameTime);
+            //Player and camera update // Character aan level toevoegen?
+            /*player.Update(gameTime);
+            camera.Update(player.Position);*/
             base.Update(gameTime);
         }
         
@@ -104,9 +114,16 @@ namespace Game1
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(RandomColorGenerator.CurrentColor);
-            spriteBatch.Begin();
+
+            spriteBatch.Begin(); //tijdelijke vervanging
+
+            //Drawing viewport chracter and level 
+            /*var viewMatrix = camera.GetViewMatrix();
+            spriteBatch.Begin(transformMatrix: viewMatrix);
             level1.Draw(spriteBatch);
-            player.Draw(spriteBatch);
+            player.Draw(spriteBatch);*/
+
+            gameMenu.Draw(spriteBatch);
             spriteBatch.End();
             base.Draw(gameTime);
         }

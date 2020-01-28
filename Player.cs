@@ -13,7 +13,7 @@ namespace Game1
         float runSpeedTime;
         Controller controller;
 
-        public Player( Texture2D _textureRight, Texture2D _textureLeft, MovementEngine _mover, Controller _controller) :base( _textureRight, _textureLeft, _mover)
+        public Player( AnimationEngine _animation, MovementEngine _mover, Controller _controller) :base( _animation, _mover)
         {
             controller = _controller;
         }
@@ -22,25 +22,20 @@ namespace Game1
         {
             base.Update(gameTime);
             controller.Update();
-            runSpeedTime += gameTime.ElapsedGameTime.Milliseconds;
-            if (runSpeedTime > 1000 / 30)
+            
+            if (controller.Left)
             {
+                mover.MoveLeft();
+            }
 
-                if (controller.Left)
-                {
-                    mover.MoveLeft();
-                }
+            if (controller.Right)
+            {
+               mover.MoveRight();
+            }
 
-                if (controller.Right)
-                {
-                    mover.MoveRight();
-                }
-
-                if (controller.Up)
-                {
-                    mover.MoveUp();
-                }
-                runSpeedTime = 0;
+            if (controller.Up)
+            {
+                 mover.MoveUp();
             }
         }
     }

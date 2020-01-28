@@ -44,10 +44,13 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AnimationEngine.cs" />
     <Compile Include="Block.cs" />
+    <Compile Include="Camera.cs" />
     <Compile Include="Character.cs" />
     <Compile Include="Collider.cs" />
     <Compile Include="Controller.cs" />
+    <Compile Include="GameMenu.cs" />
     <Compile Include="ICollidable.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="Level1.cs" />

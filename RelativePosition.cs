@@ -1,40 +1,56 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Game1
 {
-    class RelativePosition
+    /// <summary>
+    ///  based on this tutorial https://www.youtube.com/watch?v=l0WS5SvKdY4
+    /// </summary>
+    static class RelativePosition
     {
-        public int Horizontal { get; set; } = 0;
-        public int Vertical { get; set; } = 0;
-
-        public RelativePosition() { }
-
-        public RelativePosition(ICollidable collidable1 ,ICollidable collidable2)//relative positie tegenover collision item
+        public static bool TouchTopOf(this ICollidable coll1, ICollidable coll2)
         {
-            
-            if (collidable1.CollisionRect.X < collidable2.CollisionRect.X && collidable1.CollisionRect.X + collidable1.CollisionRect.Width >= collidable2.CollisionRect.X)
-            {
-                Horizontal = 1; //collision rechts
-            }
+            var rect1 = coll1.CollisionRect;
+            var rect2 = coll2.CollisionRect;
+            return (rect1.Bottom >= rect2.Top - 1 &&
+                    rect1.Bottom <= rect2.Top + (rect2.Height / 2) &&
+                    rect1.Right >= rect2.Left + (rect2.Width / 5) &&
+                    rect1.Left <= rect2.Right - (rect2.Width / 5));
+        }
 
-            if (collidable1.CollisionRect.X <= collidable2.CollisionRect.X + collidable2.CollisionRect.Width && collidable1.CollisionRect.X + collidable1.CollisionRect.Width > collidable2.CollisionRect.X + collidable2.CollisionRect.Width)
-            {
-                Horizontal = -1; //collision links
-            }
+        public static bool TouchBottomOf(this ICollidable coll1, ICollidable coll2)
+        {
+            var rect1 = coll1.CollisionRect;
+            var rect2 = coll2.CollisionRect;
+            return (rect1.Top <= rect2.Bottom + (rect2.Height / 5) &&
+                    rect1.Top >= rect2.Bottom - 5 &&
+                    rect1.Right >= rect2.Left + (rect2.Width / 5) &&
+                    rect1.Left <= rect2.Right - (rect2.Width / 5));
+        }
 
-            if (collidable1.CollisionRect.Y > collidable2.CollisionRect.Y && collidable1.CollisionRect.Y - collidable1.CollisionRect.Height <= collidable2.CollisionRect.X)
-            {
-                Vertical = 1; //collision boven
-            }
+        public static bool TouchRightOf(this ICollidable coll1, ICollidable coll2)
+        {
+            var rect1 = coll1.CollisionRect;
+            var rect2 = coll2.CollisionRect;
+            return (rect1.Right <= rect2.Right &&
+                    rect1.Right >= rect2.Left - 5 &&
+                    rect1.Top <= rect2.Bottom - (rect2.Width / 4) &&
+                    rect1.Bottom >= rect2.Top + (rect2.Width / 4));
+        }
 
-            if (collidable1.CollisionRect.Y >= collidable2.CollisionRect.Y - collidable2.CollisionRect.Height && collidable1.CollisionRect.Y - collidable1.CollisionRect.Height < collidable2.CollisionRect.Y + collidable2.CollisionRect.Height)
-            {
-                Vertical = -1; //collision onder
-            }
+        public static bool TouchLeftOf(this ICollidable coll1, ICollidable coll2)
+        {
+            var rect1 = coll1.CollisionRect;
+            var rect2 = coll2.CollisionRect;
+            return (rect1.Left >= rect2.Left &&
+                    rect1.Left <= rect2.Right + 5 &&
+                    rect1.Top <= rect2.Bottom - (rect2.Width / 4) &&
+                    rect1.Bottom >= rect2.Top + (rect2.Width / 4));
         }
     }
 }

@@ -10,89 +10,140 @@ namespace Game1
 {
     class MovementEngine
     {
-       // public Vector2 maxVelocity { get; set; } = new Vector2(0.01f,0.01f);
-        public Vector2 Position { get; set; }
-        public Vector2 Velocity { get; set; }
+        public Vector2 maxVelocity { get; set; }
+        public Vector2 Position { get; private set; }
+        public Vector2 Velocity { get; private set; }
+        public Vector2 Acceleration { get; set; }
 
-        //public Vector2 Acceleration { get; set; } 
-       
         float deltaTime;
-        public RelativePosition relative { private get; set; }
 
-        public MovementEngine(Vector2 _position, Vector2 _velocity)
+        public MovementEngine(Vector2 _position, Vector2 _maxVelocity, Vector2 _acceleration)
         {
             Position = _position;
-            Velocity = _velocity;
-            //Acceleration = new Vector2(0.001f, 0.001f);
+            maxVelocity = _maxVelocity;
+            Acceleration = _acceleration;
         }
 
         public void MoveLeft()
         {
-            if (relative == null || relative.Horizontal != -1)
-            {
-                //Velocity = new Vector2(Velocity.X - Acceleration.X * deltaTime, Velocity.Y);
-                Position = new Vector2(Position.X - Velocity.X * deltaTime, Position.Y);
-            }
+            Velocity = new Vector2(Velocity.X - Acceleration.X * deltaTime, Velocity.Y);
         }
 
         public void MoveRight()
         {
-            if (relative == null || relative.Horizontal != 1 )
-            {
-                //Velocity = new Vector2(Velocity.X + Acceleration.X * deltaTime, Velocity.Y);
-                Position = new Vector2(Position.X + Velocity.X * deltaTime, Position.Y);
-            }
+            Velocity = new Vector2(Velocity.X + Acceleration.X * deltaTime, Velocity.Y);
         }
 
         public void MoveUp()
         {
-            if (relative == null || relative.Vertical != 1)
-            {
-                //Velocity = new Vector2(Velocity.X, Velocity.Y - Acceleration.Y * deltaTime);
-                Position = new Vector2(Position.X, Position.Y - Velocity.Y * deltaTime);
-            }
+            Velocity = new Vector2(Velocity.X, Velocity.Y - Acceleration.Y * deltaTime);
         }
 
         public void MoveDown()
         {
-            if (relative == null || relative.Vertical != -1)
-            {
-                //Velocity = new Vector2(Velocity.X, Velocity.Y + Acceleration.Y * deltaTime);
-                Position = new Vector2(Position.X, Position.Y + Velocity.Y * deltaTime);
-            }
+            Velocity = new Vector2(Velocity.X, Velocity.Y + Acceleration.Y * deltaTime);
         }
 
-        /*public void SpeedControl()
+        public void UpdatePosition(ICollidable character)
         {
-            if(maxVelocity.LengthSquared() <= Velocity.LengthSquared())
-            {
-                Acceleration = new Vector2(0f, 0f);
-            }
-             
+            SpeedCheck();
 
-            else
+            if (Velocity.X > 0.01)
             {
-                Acceleration = new Vector2(0.05f, 0.05f);
+                Velocity = new Vector2(Velocity.X - Acceleration.X / 4 * deltaTime, Velocity.Y);
             }
-        }*/
-
-        public void CollisoinCheck(ICollidable character)
-        {
-            ICollidable tmp;
-            tmp = Collider.CheckCollider(character);
-            if (tmp != null) //exception throwen en catchen wss beter
+            if (Velocity.X < -0.01)
             {
-                relative = new RelativePosition(character, tmp);
+                Velocity = new Vector2(Velocity.X + Acceleration.X / 4 * deltaTime, Velocity.Y);
             }
-            else relative = null;
-        }
 
-        public void Update(GameTime gameTime, ICollidable character)
-        {
-            //SpeedControl();
-            deltaTime = gameTime.ElapsedGameTime.Milliseconds;
+            if (Velocity.X >= -0.01 && Velocity.X <= 0.01)
+            {
+                Velocity = new Vector2(0, Velocity.Y);
+            }
+
+            Velocity = new Vector2(Velocity.X, Velocity.Y + Acceleration.Y / 6 * deltaTime);
+
             CollisoinCheck(character);
 
+            Position = Position + Velocity * deltaTime;
+        }
+
+        private void SpeedCheck()
+        {
+            if (Velocity.X > maxVelocity.X)
+            {
+                Velocity = new Vector2(maxVelocity.X, Velocity.Y);
+            }
+
+            if (-Velocity.X > maxVelocity.X)
+            {
+                Velocity = new Vector2(-maxVelocity.X, Velocity.Y);
+            }
+
+            if (Velocity.Y > maxVelocity.Y)
+            {
+                Velocity = new Vector2(Velocity.X, maxVelocity.Y);
+            }
+
+            if (-Velocity.Y > maxVelocity.X)
+            {
+                Velocity = new Vector2(Velocity.X, -maxVelocity.Y);
+            }
+        }
+
+        private void CollisoinCheck(ICollidable character)
+        {
+            List<ICollidable> tmp;
+            tmp = Collider.CheckCollider(character);
+
+            foreach (var collidable in tmp)
+            {
+                if (character.TouchLeftOf(collidable))//links
+                {
+                    if (Velocity.X < 0)
+                    {
+                        Velocity = new Vector2(0, Velocity.Y);
+                    }
+                }
+
+                if (character.TouchRightOf(collidable))//rechts
+                {
+                    if (Velocity.X > 0)
+                    {
+                        Velocity = new Vector2(0, Velocity.Y);
+                    }
+                }
+
+                if (character.TouchTopOf(collidable)) //onder
+                {
+                    if (Velocity.Y > 0)
+                    {
+                        //Position = new Vector2(Position.X, collidable.CollisionRect.Top - character.CollisionRect.Height);
+                        Velocity = new Vector2(Velocity.X, 0);
+                        //hasJumped = false;
+                    }
+                }
+
+                if (character.TouchBottomOf(collidable))//boven
+                {
+                    if (Velocity.Y <  0)
+                    {
+                        Position = new Vector2(Position.X, collidable.CollisionRect.Bottom - 1);
+                        Velocity = new Vector2(Velocity.X, 0f);
+                        Debug.WriteLine("touching bottom");
+                    }
+                }
+            }
+
+
+        }
+         
+        public void Update(GameTime gameTime, ICollidable character)
+        {
+            deltaTime = gameTime.ElapsedGameTime.Milliseconds;
+            UpdatePosition(character);
+          
         }
     }
 

@@ -32,12 +32,14 @@ namespace Game1
                 {
                     if (ByteArray[rij, kolom] == 1)
                     {
-                        blockArray[rij, kolom] = new Block(new Point(kolom * 36, rij * 50), blockTexture);
+                        blockArray[rij, kolom] = new Block(new Vector2(kolom * blockTexture.Width, rij * blockTexture.Height), blockTexture);
                         Collider.addCollider(blockArray[rij, kolom]);
                     }
                 }
             }
         }
+
+        [Obsolete]
         public void Draw(SpriteBatch spriteBatch)
         {
             for (int x = 0; x < ByteArray.GetLength(0); x++)

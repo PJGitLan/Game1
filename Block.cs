@@ -11,21 +11,23 @@ namespace Game1
     class Block : ICollidable
     {
         Texture2D texture;
-        Point position;
+        Vector2 position;
         Rectangle collisionRectangle;
         public Rectangle CollisionRect { get => collisionRectangle; set => collisionRectangle = value; }
 
-        public Block(Point _position, Texture2D _texture)
+        public Block(Vector2 _position, Texture2D _texture)
         {
             position = _position;
             texture = _texture;
-            collisionRectangle = new Rectangle(position.X, position.Y - 25, 36, 25);
+            collisionRectangle = new Rectangle((int) position.X, (int) position.Y, texture.Width, texture.Height);
         }
 
         public void Update(GameTime gameTime)
         {
-            CollisionRect = new Rectangle(position.X, position.Y-25, 36, 25);
-    }
+            CollisionRect = new Rectangle((int) position.X, (int) position.Y, texture.Width, texture.Height);
+        }
+
+        [Obsolete]
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture, new Vector2(position.X, position.Y));

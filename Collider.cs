@@ -16,18 +16,18 @@ namespace Game1
             collidables.Add(colidableObject);
         }
 
-        static public ICollidable CheckCollider(ICollidable source)
+        static public List<ICollidable> CheckCollider(ICollidable source)
         {
+            List<ICollidable> collisions = new List<ICollidable>();
             foreach (var collidable in collidables)
             {
                 if (source.CollisionRect.Intersects(collidable.CollisionRect))
                 {
                     //Debug.WriteLine("intersection");
-                    return collidable;
+                    collisions.Add(collidable);
                 }
             }
-            Debug.WriteLine("no intersection!");
-            return null;
+            return collisions;
         }
     }
 }
