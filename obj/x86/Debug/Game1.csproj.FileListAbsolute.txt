@@ -253,4 +253,6 @@ D:\DocumentsHDD\AP\Game Development\Game1\bin\Windows\x86\Debug\Content\isometri
 D:\DocumentsHDD\AP\Game Development\Game1\bin\Windows\x86\Debug\Content\isometric_pixel_flat_0228.xnb
 D:\DocumentsHDD\AP\Game Development\Game1\bin\Windows\x86\Debug\Content\isometric_pixel_flat_0229.xnb
 D:\DocumentsHDD\AP\Game Development\Game1\bin\Windows\x86\Debug\Content\isometric_pixel_flat_0230.xnb
-D:\DocumentsHDD\AP\Game Development\Game1\bin\Windows\x86\Debug\Content\font.xnb
+D:\DocumentsHDD\AP\Game Development\Game1\bin\Windows\x86\Debug\Content\regularFont.xnb
+D:\DocumentsHDD\AP\Game Development\Game1\bin\Windows\x86\Debug\Content\selectedFont.xnb
+D:\DocumentsHDD\AP\Game Development\Game1\bin\Windows\x86\Debug\Content\titelFont.xnb

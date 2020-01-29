@@ -54,6 +54,7 @@
     <Compile Include="ICollidable.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="Level1.cs" />
+    <Compile Include="LevelManager.cs" />
     <Compile Include="MovementEngine.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="RandomColorGenerator.cs" />

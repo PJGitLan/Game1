@@ -13,13 +13,6 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin font.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:font.spritefont
-
 #begin isometric_pixel_flat_0000.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -2791,6 +2784,27 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:isometric_pixel_flat_0230.png
+
+#begin regularFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:regularFont.spritefont
+
+#begin selectedFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:selectedFont.spritefont
+
+#begin titelFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:titelFont.spritefont
 
 #begin walkingFatMan.png
 /importer:TextureImporter

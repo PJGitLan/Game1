@@ -10,12 +10,11 @@ namespace Game1
 {
     class Player : Character
     {
-        float runSpeedTime;
         Controller controller;
 
         public Player( AnimationEngine _animation, MovementEngine _mover, Controller _controller) :base( _animation, _mover)
         {
-            controller = _controller;
+            controller = _controller; 
         }
 
         public override void Update(GameTime gameTime)

@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace Game1
@@ -9,6 +10,14 @@ namespace Game1
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
+
+    enum GameState
+    {
+        MainMenu,
+        Level1,
+        Level2,
+    }
+
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
@@ -20,9 +29,12 @@ namespace Game1
         Level level1;
         float elapsed;
         Camera camera;
-        SpriteFont font;
+        List<SpriteFont> fonts;
         GameMenu gameMenu;
-        // Texture2D pixel;
+        Controller keyboard;
+        
+        GameState CurrGameState = GameState.Level1;
+        GameState PrevGameState = GameState.Level1;
 
         public Game1()
         {
@@ -39,10 +51,14 @@ namespace Game1
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            
+            //set initial background color
             GraphicsDevice.Clear(RandomColorGenerator.Next());
+
+            //initialize a controller and camera
             camera = new Camera(GraphicsDevice.Viewport, new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2));
-            
-            
+            keyboard = new TheKeyBoard();
+
             base.Initialize();
         }
 
@@ -54,20 +70,35 @@ namespace Game1
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            font = Content.Load<SpriteFont>("font");
-            gameMenu = new GameMenu(font);
 
-            /// Loading level en character
-            /*walkingFatManRight = Content.Load<Texture2D>("walkingFatMan");
+            // Loading character sprites
+            walkingFatManRight = Content.Load<Texture2D>("walkingFatMan");
             walkingFatManLeft = Content.Load<Texture2D>("walkingFatManLeft");
+
+            //Loading blocks
             grasMudBlock = Content.Load<Texture2D>("isometric_pixel_flat_0014");
-            Controller keyboard = new TheKeyBoard();
+
+            //loading fonts
+            fonts = new List<SpriteFont>() { Content.Load<SpriteFont>("titelFont"),
+                                             Content.Load<SpriteFont>("selectedFont"), 
+                                             Content.Load<SpriteFont>("regularFont") };
+
+            ReLoadLevel();
+
+        }
+
+        protected void ReLoadLevel()
+        {
+            //Level1
             level1 = new Level1(grasMudBlock);
-            player = new Player(new AnimationEngine(walkingFatManRight, walkingFatManLeft, 64, 8), new MovementEngine(new Vector2(200,200), new Vector2(0.35f, 0.35f), new Vector2(0.01f, 0.01f)), keyboard);
-            */
+            player = new Player(new AnimationEngine(walkingFatManRight, walkingFatManLeft, 64, 8),
+                                new MovementEngine(new Vector2(200, 200),
+                                new Vector2(0.35f, 0.35f),
+                                new Vector2(0.01f, 0.01f)),
+                                keyboard);
 
-            // TODO: use this.Content to load your game content here
-
+            //GameMenu
+            gameMenu = new GameMenu(fonts, keyboard);
         }
 
         /// <summary>
@@ -92,18 +123,40 @@ namespace Game1
 
             elapsed += gameTime.ElapsedGameTime.Milliseconds;
 
-            //Level update
-            //level1.Update(gameTime);
-
             if (elapsed > 2000)
             {
                 RandomColorGenerator.Next();
                 elapsed = 0;
             }
+
+            CurrGameState = (GameState) gameMenu.levelChosen ;
+            if (CurrGameState != PrevGameState)
+            {
+                PrevGameState = CurrGameState;
+                ReLoadLevel();
+            }
+
+            //Loading right level. Inspired by https://www.youtube.com/watch?v=54L_w0PiRa8&list=PL667AC2BF84D85779&index=30
+            switch (CurrGameState)
+            {
+                default:
+                    level1.Update(gameTime);
+                    
+                    //Player and camera update
+                    player.Update(gameTime);
+                    camera.Update(player.Position);
+                    break;
+
+                case GameState.Level2:
+                    break;
+
+                case GameState.Level1:
+                    gameMenu.Update(gameTime);
+                    break;
+            }
+
             
-            //Player and camera update // Character aan level toevoegen?
-            /*player.Update(gameTime);
-            camera.Update(player.Position);*/
+            
             base.Update(gameTime);
         }
         
@@ -115,15 +168,26 @@ namespace Game1
         {
             GraphicsDevice.Clear(RandomColorGenerator.CurrentColor);
 
-            spriteBatch.Begin(); //tijdelijke vervanging
+            switch (CurrGameState)
+            {
+                default:
+                    Debug.WriteLine(CurrGameState);
+                    var viewMatrix = camera.GetViewMatrix();
+                    spriteBatch.Begin(transformMatrix: viewMatrix);
+                    level1.Draw(spriteBatch); //testen of het echt obsolete is
+                    player.Draw(spriteBatch);
+                    break;
 
-            //Drawing viewport chracter and level 
-            /*var viewMatrix = camera.GetViewMatrix();
-            spriteBatch.Begin(transformMatrix: viewMatrix);
-            level1.Draw(spriteBatch);
-            player.Draw(spriteBatch);*/
+                case GameState.Level2:
+                    break;
 
-            gameMenu.Draw(spriteBatch);
+                case GameState.Level1:
+                    Debug.WriteLine(CurrGameState);
+                    spriteBatch.Begin();
+                    gameMenu.Draw(spriteBatch, GraphicsDevice.Viewport);
+                    break;
+            }
+
             spriteBatch.End();
             base.Draw(gameTime);
         }
