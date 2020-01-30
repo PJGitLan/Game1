@@ -4,6 +4,7 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
+    <File>D:/DocumentsHDD/AP/Game Development/Game1/Content/cheeseburger.png</File>
     <File>D:/DocumentsHDD/AP/Game Development/Game1/Content/isometric_pixel_flat_0000.png</File>
     <File>D:/DocumentsHDD/AP/Game Development/Game1/Content/isometric_pixel_flat_0001.png</File>
     <File>D:/DocumentsHDD/AP/Game Development/Game1/Content/isometric_pixel_flat_0002.png</File>
@@ -242,6 +243,7 @@
     <File>D:/DocumentsHDD/AP/Game Development/Game1/Content/walkingFatManLeft.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

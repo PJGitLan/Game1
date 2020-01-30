@@ -12,11 +12,11 @@ namespace Game1
     {
         protected byte[,] ByteArray;
         Block[,] blockArray;
-        Texture2D blockTexture;
+        List<Texture2D> blockTextures;
 
-        public Level(Texture2D _blockTexture)
+        public Level(List<Texture2D> _blockTextures)
         {
-            blockTexture = _blockTexture;
+            blockTextures = _blockTextures;
             LoadByteList();
             blockArray = new Block[ByteArray.GetLength(0), ByteArray.GetLength(1)];
             LoadBlocks();
@@ -30,10 +30,15 @@ namespace Game1
             {
                 for (int kolom = 0; kolom < ByteArray.GetLength(1); kolom++)
                 {
-                    if (ByteArray[rij, kolom] == 1)
+                    int i = 0;
+                    foreach (var blockTexture in blockTextures)
                     {
-                        blockArray[rij, kolom] = new Block(new Vector2(kolom * blockTexture.Width, rij * blockTexture.Height), blockTexture);
-                        Collider.addCollider(blockArray[rij, kolom]);
+                        if (ByteArray[rij, kolom] == i+1)
+                        {
+                            blockArray[rij, kolom] = new Block(new Vector2(kolom * blockTexture.Width, rij * blockTexture.Height), blockTexture); ;
+                            Collider.addCollider(blockArray[rij, kolom]);
+                        }
+                        i++;
                     }
                 }
             }

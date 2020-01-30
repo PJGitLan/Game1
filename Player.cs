@@ -17,9 +17,9 @@ namespace Game1
             controller = _controller; 
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime, Viewport viewport)
         {
-            base.Update(gameTime);
+            base.Update(gameTime, viewport);
             controller.Update();
             
             if (controller.Left)
@@ -35,6 +35,11 @@ namespace Game1
             if (controller.Up)
             {
                  mover.MoveUp();
+            }
+
+            if(Position.Y > viewport.Bounds.Bottom + 50)
+            {
+                mover.Position = new Vector2(200, 200); //Hardcode origin
             }
         }
     }

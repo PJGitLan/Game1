@@ -50,11 +50,12 @@
     <Compile Include="Character.cs" />
     <Compile Include="Collider.cs" />
     <Compile Include="Controller.cs" />
+    <Compile Include="Finish.cs" />
+    <Compile Include="GameLogic.cs" />
     <Compile Include="GameMenu.cs" />
     <Compile Include="ICollidable.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="Level1.cs" />
-    <Compile Include="LevelManager.cs" />
     <Compile Include="MovementEngine.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="RandomColorGenerator.cs" />

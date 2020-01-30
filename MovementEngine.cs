@@ -11,11 +11,14 @@ namespace Game1
     class MovementEngine
     {
         public Vector2 maxVelocity { get; set; }
-        public Vector2 Position { get; private set; }
+        public Vector2 Position { get; set; }
         public Vector2 Velocity { get; private set; }
         public Vector2 Acceleration { get; set; }
 
+        public bool IsLanded { get; set; } = false;
+
         float deltaTime;
+        float timeSinceJump;
 
         public MovementEngine(Vector2 _position, Vector2 _maxVelocity, Vector2 _acceleration)
         {
@@ -36,12 +39,20 @@ namespace Game1
 
         public void MoveUp()
         {
-            Velocity = new Vector2(Velocity.X, Velocity.Y - Acceleration.Y * deltaTime);
+            //Debug.WriteLine(timeSinceJump);
+            float duration = 250;
+            if (IsLanded || timeSinceJump < duration)
+            {
+                Velocity = new Vector2(Velocity.X, Velocity.Y - Acceleration.Y * deltaTime);
+                IsLanded = false;
+                if(timeSinceJump > duration)timeSinceJump = 0;
+            }
         }
 
         public void MoveDown()
         {
-            Velocity = new Vector2(Velocity.X, Velocity.Y + Acceleration.Y * deltaTime);
+            
+                Velocity = new Vector2(Velocity.X, Velocity.Y + Acceleration.Y * deltaTime);   
         }
 
         public void UpdatePosition(ICollidable character)
@@ -121,6 +132,7 @@ namespace Game1
                     {
                         //Position = new Vector2(Position.X, collidable.CollisionRect.Top - character.CollisionRect.Height);
                         Velocity = new Vector2(Velocity.X, 0);
+                        IsLanded = true;
                         //hasJumped = false;
                     }
                 }
@@ -142,6 +154,7 @@ namespace Game1
         public void Update(GameTime gameTime, ICollidable character)
         {
             deltaTime = gameTime.ElapsedGameTime.Milliseconds;
+            timeSinceJump += 20;
             UpdatePosition(character);
           
         }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SourceFile>D:/DocumentsHDD/AP/Game Development/Game1/Content/titelFont.spritefont</SourceFile>
-  <SourceTime>2020-01-29T14:03:46.9542183+01:00</SourceTime>
+  <SourceTime>2020-01-29T15:18:28.0113587+01:00</SourceTime>
   <DestFile>D:/DocumentsHDD/AP/Game Development/Game1/Content/bin/Windows/titelFont.xnb</DestFile>
-  <DestTime>2020-01-29T14:21:03.0527771+01:00</DestTime>
+  <DestTime>2020-01-30T02:17:30.8811553+01:00</DestTime>
   <Importer>FontDescriptionImporter</Importer>
   <ImporterTime>2018-12-08T17:35:54+01:00</ImporterTime>
   <Processor>FontDescriptionProcessor</Processor>

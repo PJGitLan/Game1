@@ -17,7 +17,6 @@ namespace Game1
         protected MovementEngine mover;
         protected AnimationEngine animation;
        
-        //int health;
 
         public Rectangle CollisionRect { get => collisionRectangle; set => collisionRectangle = value; }
 
@@ -27,7 +26,7 @@ namespace Game1
             mover = _mover;
             animation = _animationEngine;
         }
-        public virtual void Update(GameTime gameTime)
+        public virtual void Update(GameTime gameTime, Viewport viewport)
         { 
             CollisionRect = new Rectangle((int)Position.X, (int)Position.Y, 60, 64);
             mover.Update(gameTime, this);

@@ -11,11 +11,11 @@ namespace Game1
 {
     class GameMenu
     { 
-        const String titel = "KUT_Vegetarier vs KUT_dikzak";
-        const String message = "To select press up"; 
-        List<String> levelOptions = new List<String>() { "Level1", "Level2" };
+        String titel;
+        String message; 
+        List<String> levelOptions = new List<String>();
         int levelSelected;
-        public int levelChosen { get; private set; } = 0;
+        public int LevelChosen { get; private set; } = 0;
         
         private SpriteFont titelFont;
         private SpriteFont regularFont;
@@ -24,17 +24,21 @@ namespace Game1
         Controller controller;
         float elapsed;
 
-        public GameMenu(List<SpriteFont> _fonts, Controller _controller)//lijst van fonts maken
+        public GameMenu(List<SpriteFont> _fonts, Controller _controller, String titel, String message, List<String> levelOptions)//lijst van fonts maken
         {
             titelFont = _fonts[0];
             selectedFont = _fonts[1];
             regularFont = _fonts[2];
             controller = _controller;
-            
+
+            this.titel = titel;
+            this.message = message;
+            this.levelOptions = levelOptions;
         }
 
         public void Update(GameTime gameTime)
         {
+            
             elapsed += gameTime.ElapsedGameTime.Milliseconds;
             controller.Update();
             if (elapsed > 100 )
@@ -61,7 +65,7 @@ namespace Game1
 
             if (controller.Up)
             {
-                levelChosen = levelSelected+1;
+                LevelChosen = levelSelected+1;
             }
         }
 

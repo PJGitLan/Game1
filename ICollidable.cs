@@ -9,6 +9,6 @@ namespace Game1
 {
     interface ICollidable
     {
-       Rectangle CollisionRect { get; set; }
+        Rectangle CollisionRect { get; set; }
     }
 }
