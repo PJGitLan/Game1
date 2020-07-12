@@ -26,11 +26,6 @@ namespace Game1
 
             color = new Color(r,g,b);
 
-            //Debug.WriteLine(r);
-            //Debug.WriteLine(g);
-            //Debug.WriteLine(b);
-            //Debug.WriteLine("--------------------------------------------");
-
             return color;
         }
 
@@ -41,7 +36,3 @@ namespace Game1
         }
     }
 }
-
-    //Random rand = new Random();
-    //
-    //}

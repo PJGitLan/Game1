@@ -15,11 +15,11 @@ namespace Game1
         Rectangle collisionRectangle;
         public Rectangle CollisionRect { get => collisionRectangle; set => collisionRectangle = value; }
 
-        public Block(Vector2 _position, Texture2D _texture)
+        public Block(Vector2 position, Texture2D texture)
         {
-            position = _position;
-            texture = _texture;
-            collisionRectangle = new Rectangle((int) position.X, (int) position.Y, texture.Width, texture.Height);
+            this.position = position;
+            this.texture = texture;
+            this.collisionRectangle = new Rectangle((int) position.X, (int) position.Y, texture.Width, texture.Height);
         }
 
         public void Update(GameTime gameTime)

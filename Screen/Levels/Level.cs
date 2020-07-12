@@ -1,4 +1,7 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Game1.GameControl;
+using Game1.Screen;
+using Game1.Screen.MenuItems;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -8,11 +11,14 @@ using System.Threading.Tasks;
 
 namespace Game1
 {
-    public abstract class Level
+    public abstract class Level : IScreen
     {
         protected byte[,] ByteArray;
         Block[,] blockArray;
         List<Texture2D> blockTextures;
+
+        private ISetStateBehavior stateBehavior { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        private GameController gameController { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public Level(List<Texture2D> _blockTextures)
         {

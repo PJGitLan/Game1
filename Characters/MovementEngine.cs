@@ -10,21 +10,22 @@ namespace Game1
 {
     class MovementEngine
     {
-        public Vector2 maxVelocity { get; set; }
+        //properties private maken
+        public Vector2 maxVelocity { get; set; } 
         public Vector2 Position { get; set; }
-        public Vector2 Velocity { get; private set; }
-        public Vector2 Acceleration { get; set; }
+        public Vector2 Velocity { get; private set; } 
+        public Vector2 Acceleration { get; set; } 
 
         public bool IsLanded { get; set; } = false;
 
         float deltaTime;
         float timeSinceJump;
 
-        public MovementEngine(Vector2 _position, Vector2 _maxVelocity, Vector2 _acceleration)
+        public MovementEngine(Vector2 position, Vector2 maxVelocity, Vector2 acceleration)
         {
-            Position = _position;
-            maxVelocity = _maxVelocity;
-            Acceleration = _acceleration;
+            Position = position;
+            this.maxVelocity = maxVelocity;
+            Acceleration = acceleration;
         }
 
         public void MoveLeft()
@@ -39,7 +40,6 @@ namespace Game1
 
         public void MoveUp()
         {
-            //Debug.WriteLine(timeSinceJump);
             float duration = 250;
             if (IsLanded || timeSinceJump < duration)
             {
@@ -110,7 +110,7 @@ namespace Game1
 
             foreach (var collidable in tmp)
             {
-                if (character.TouchLeftOf(collidable))//links
+                if (character.TouchLeftOf(collidable))//Left
                 {
                     if (Velocity.X < 0)
                     {
@@ -118,7 +118,7 @@ namespace Game1
                     }
                 }
 
-                if (character.TouchRightOf(collidable))//rechts
+                if (character.TouchRightOf(collidable))//Right
                 {
                     if (Velocity.X > 0)
                     {
@@ -126,7 +126,7 @@ namespace Game1
                     }
                 }
 
-                if (character.TouchTopOf(collidable)) //onder
+                if (character.TouchTopOf(collidable)) //Below
                 {
                     if (Velocity.Y > 0)
                     {
@@ -137,7 +137,7 @@ namespace Game1
                     }
                 }
 
-                if (character.TouchBottomOf(collidable))//boven
+                if (character.TouchBottomOf(collidable))//On top
                 {
                     if (Velocity.Y <  0)
                     {

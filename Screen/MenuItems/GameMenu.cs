@@ -1,4 +1,7 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Game1.GameControl;
+using Game1.Screen;
+using Game1.Screen.MenuItems;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -9,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Game1
 {
-    class GameMenu
+    class GameMenu : IScreen
     { 
         String titel;
         String message; 
@@ -22,18 +25,27 @@ namespace Game1
         private SpriteFont selectedFont;
 
         Controller controller;
+        Viewport viewport;
         float elapsed;
 
-        public GameMenu(List<SpriteFont> _fonts, Controller _controller, String titel, String message, List<String> levelOptions)//lijst van fonts maken
+        private ISetStateBehavior stateBehavior { get; set; }
+        private GameController gameController { get; set; }
+     
+
+        //Split up in level selector and screen builder???
+        public GameMenu(List<SpriteFont> _fonts, Controller _controller, String titel, String message, List<String> levelOptions, Viewport viewport, GameController gameController, ISetStateBehavior stateBehavior)//lijst van fonts maken
         {
             titelFont = _fonts[0];
             selectedFont = _fonts[1];
             regularFont = _fonts[2];
             controller = _controller;
+            this.stateBehavior = stateBehavior;
+            this.gameController = gameController;
 
             this.titel = titel;
             this.message = message;
             this.levelOptions = levelOptions;
+            this.viewport = viewport;
         }
 
         public void Update(GameTime gameTime)
@@ -41,35 +53,44 @@ namespace Game1
             
             elapsed += gameTime.ElapsedGameTime.Milliseconds;
             controller.Update();
-            if (elapsed > 100 )
-            {
+            //if (elapsed > 100 ) //check time between "levelselected" value switch instead of time between click. nvm probably won't work
+            //{
                 if (controller.Right)
                 {
-                    levelSelected++;
-                    if (levelSelected >= levelOptions.Count)
+                    if (levelSelected < levelOptions.Count-1)
                     {
-                        levelSelected = 0;
+                        levelSelected++;
+                    }
+                    
+                    else
+                    {
+                        levelSelected = levelOptions.Count-1;
                     }
                 }
 
                 if (controller.Left)
                 {
-                    levelSelected--;
-                    if (levelSelected < 0)
+                    if (levelSelected > 0)
                     {
-                        levelSelected = levelOptions.Count - 1;
+                        levelSelected--;
+                    }
+                    
+                    else
+                    {
+                        levelSelected = 0;
                     }
                 }
-                elapsed = 0;
-            }
+                //elapsed = 0;
+            //}
 
             if (controller.Up)
             {
                 LevelChosen = levelSelected+1;
+                stateBehavior.SetState(LevelChosen, gameController);
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch, Viewport viewport)
+        public void Draw(SpriteBatch spriteBatch)
         {
             Vector2 size = titelFont.MeasureString(titel);
             

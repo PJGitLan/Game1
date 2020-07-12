@@ -12,12 +12,12 @@ namespace Game1
     {
         Controller controller;
 
-        public Player( AnimationEngine _animation, MovementEngine _mover, Controller _controller) :base( _animation, _mover)
+        public Player( AnimationEngine animation, MovementEngine mover, Controller controller) :base( animation, mover)
         {
-            controller = _controller; 
+            this.controller = controller; 
         }
 
-        public override void Update(GameTime gameTime, Viewport viewport)
+        public override void Update(GameTime gameTime, Viewport viewport) //1 klasse die link tusse controller en klasse doet
         {
             base.Update(gameTime, viewport);
             controller.Update();

@@ -20,11 +20,11 @@ namespace Game1
 
         public Rectangle CollisionRect { get => collisionRectangle; set => collisionRectangle = value; }
 
-        public Character(AnimationEngine _animationEngine, MovementEngine _mover)
+        public Character(AnimationEngine animationEngine, MovementEngine mover)
         {
-            collisionRectangle = new Rectangle((int)Position.X, (int)Position.Y, 60, 64);
-            mover = _mover;
-            animation = _animationEngine;
+            this.collisionRectangle = new Rectangle((int)Position.X, (int)Position.Y, 60, 64);
+            this.mover = mover;
+            this.animation = animationEngine;
         }
         public virtual void Update(GameTime gameTime, Viewport viewport)
         { 

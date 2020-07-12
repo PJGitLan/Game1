@@ -4,13 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Game1
+namespace Game1.Screen.Levels
 {
-    class LevelManager
+    class LevelController
     {
-        public void LoadLevel()
-        {
-              
-        }
     }
 }

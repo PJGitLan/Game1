@@ -16,6 +16,11 @@ namespace Game1
             collidables.Add(colidableObject);
         }
 
+        static public void ClearColliders()
+        {
+            collidables.Clear();
+        }
+
         static public List<ICollidable> CheckCollider(ICollidable source)
         {
             List<ICollidable> collisions = new List<ICollidable>();

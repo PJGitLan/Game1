@@ -1,4 +1,7 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Game1.GameControl;
+using Game1.Screen;
+using Game1.Screen.MenuItems;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -11,36 +14,18 @@ namespace Game1
     /// This is the main type for your game.
     /// </summary>
 
-    enum GameState
-    {
-        MainMenu,
-        Level1,
-        Level2,
-        EndScreen
-    }
-
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Texture2D walkingFatManRight;
-        Texture2D walkingFatManLeft;
         
-        Player player;
-        Level1 level1;
-        Level level2;
         float elapsed;
         Camera camera;
-        List<SpriteFont> fonts;
-        List<Texture2D> blocksLevel1;
-        List<Texture2D> blocksLevel2;
-        GameMenu gameMenu;
-        GameMenu endScreen;
+        
         Controller keyboard;
         GameLogic gameLogic;
-        
-        GameState CurrGameState = GameState.MainMenu;
-        GameState PrevGameState = GameState.MainMenu;
+        List<IScreen> screens;
+        GameController gameController;
 
         public Game1()
         {
@@ -62,7 +47,7 @@ namespace Game1
             GraphicsDevice.Clear(RandomColorGenerator.Next());
 
             //initialize a controller and camera
-            camera = new Camera(GraphicsDevice.Viewport, new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2));
+            camera = new Camera(GraphicsDevice.Viewport, new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2)); //why don't do this in constructor
             keyboard = new TheKeyBoard();
 
             base.Initialize();
@@ -77,27 +62,30 @@ namespace Game1
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            //Used to update and draw correct screen
+            gameController = new GameController();
+
             // Loading character sprites
-            walkingFatManRight = Content.Load<Texture2D>("walkingFatMan");
-            walkingFatManLeft = Content.Load<Texture2D>("walkingFatManLeft");
+            Texture2D walkingFatManRight = Content.Load<Texture2D>("walkingFatMan");
+            Texture2D walkingFatManLeft = Content.Load<Texture2D>("walkingFatManLeft");
 
             //Loading blocks
-            blocksLevel1 = new List<Texture2D>() { Content.Load<Texture2D>("isometric_pixel_flat_0014"),// gras over mud
+            List<Texture2D> blocksLevel1 = new List<Texture2D>() { Content.Load<Texture2D>("isometric_pixel_flat_0014"),// gras over mud
                                                    Content.Load<Texture2D>("isometric_pixel_flat_0086") //chest
                                                    };
 
-            blocksLevel2 = new List<Texture2D>() { Content.Load<Texture2D>("isometric_pixel_flat_0056"),// gras over stone
+            List<Texture2D> blocksLevel2 = new List<Texture2D>() { Content.Load<Texture2D>("isometric_pixel_flat_0056"),// gras over stone
                                                    Content.Load<Texture2D>("isometric_pixel_flat_0055") //stone
                                                    };
 
             //loading fonts
-            fonts = new List<SpriteFont>() { Content.Load<SpriteFont>("titelFont"),
+            List<SpriteFont> fonts = new List<SpriteFont>() { Content.Load<SpriteFont>("titelFont"),
                                              Content.Load<SpriteFont>("selectedFont"), 
                                              Content.Load<SpriteFont>("regularFont") };
 
             //Level1
-            level1 = new Level1(blocksLevel1);
-            player = new Player(new AnimationEngine(walkingFatManRight, walkingFatManLeft, 64, 8),
+            Level level1 = new Level1(blocksLevel1);
+            Player player = new Player(new AnimationEngine(walkingFatManRight, walkingFatManLeft, 64, 8), //should this be in constructor. should I set picture on the class itself etc
                                 new MovementEngine(new Vector2(200, 200),
                                 new Vector2(0.35f, 0.35f),
                                 new Vector2(0.01f, 0.01f)),
@@ -105,58 +93,20 @@ namespace Game1
             gameLogic = new GameLogic(new Finish(new Vector2(6000, 200), Content.Load<Texture2D>("cheeseburger")), player);
 
             //Level2
-            level2 = new Level1(blocksLevel1);
+            Level level2 = new Level2(blocksLevel2);
 
             //GameMenu
             List<String> options = new List<string>() { "Level 1", "Level 2" };
-            gameMenu = new GameMenu(fonts, keyboard, "Hamburger Hunt", "To select press up", options);
+            GameMenu gameMenu = new GameMenu(fonts, keyboard, "Hamburger Hunt", "To select press up", options, GraphicsDevice.Viewport, gameController, new MainMenuSetStateBehavior());
 
             //EndScreen
             options = new List<string>() { "Back To Menu" };
-            endScreen = new GameMenu(fonts, keyboard, "Level, finished!", "To select press up", options);
+            GameMenu endScreen = new GameMenu(fonts, keyboard, "Level, finished!", "To select press up", options, GraphicsDevice.Viewport, gameController, new MainMenuSetStateBehavior());//Ibehavior moet nog worden geupdate
 
-            //ReLoadLevel();
+            screens = new List<IScreen>() { level1, level2, gameMenu, endScreen };
 
-        }
+            gameController.addScreens(screens);
 
-        protected void ReLoadLevel()
-        {
-            //Loading right level. Inspired by https://www.youtube.com/watch?v=54L_w0PiRa8&list=PL667AC2BF84D85779&index=30
-            switch (CurrGameState)
-            {
-                case GameState.Level1:
-                    //Level1
-                    level1 = new Level1(blocksLevel1);
-                    player = new Player(new AnimationEngine(walkingFatManRight, walkingFatManLeft, 64, 8),
-                                        new MovementEngine(new Vector2(200, 200),
-                                        new Vector2(0.35f, 0.35f),
-                                        new Vector2(0.01f, 0.01f)),
-                                        keyboard);
-                    gameLogic = new GameLogic(new Finish(new Vector2(2300, 300), Content.Load<Texture2D>("cheeseburger")), player);
-                    break;
-
-                case GameState.Level2:
-                    //Level2
-                    level2 = new Level1(blocksLevel2);
-                    player = new Player(new AnimationEngine(walkingFatManRight, walkingFatManLeft, 64, 8),
-                                        new MovementEngine(new Vector2(200, 200),
-                                        new Vector2(0.35f, 0.35f),
-                                        new Vector2(0.01f, 0.01f)),
-                                        keyboard);
-                    gameLogic = new GameLogic(new Finish(new Vector2(2300,300), Content.Load<Texture2D>("cheeseburger")), player);
-                    break;
-
-                case GameState.EndScreen:
-                    List<String> options1 = new List<string>() { "Back To Menu" };
-                    endScreen = new GameMenu(fonts, keyboard, "Level, finished!", "To select press up", options1);
-                    break;
-
-                default:
-                    //GameMenu
-                    List<String> options = new List<string>() { "Level 1", "Level 2" };
-                    gameMenu = new GameMenu(fonts, keyboard, "Hamburger Hunt", "To select press up", options);
-                    break;
-            }
         }
 
         /// <summary>
@@ -186,53 +136,8 @@ namespace Game1
                 RandomColorGenerator.Next();
                 elapsed = 0;
             }
-            
-            if (CurrGameState != PrevGameState)
-            {
-                PrevGameState = CurrGameState;
-                ReLoadLevel();
-            }
 
-            //Loading right level. Inspired by https://www.youtube.com/watch?v=54L_w0PiRa8&list=PL667AC2BF84D85779&index=30
-            switch (CurrGameState)
-            {
-                case GameState.Level1:
-                    //level1.Update(gameTime);
-                    
-                    //Player and camera update
-                    player.Update(gameTime, GraphicsDevice.Viewport);
-                    camera.Update(player.Position);
-                    gameLogic.Update();
-                    if (gameLogic.GoalReached)
-                    {
-                        CurrGameState = GameState.EndScreen;
-                    }
-                    break;
-
-                case GameState.Level2:
-                    //level2.Update(gameTime);
-
-                    player.Update(gameTime, GraphicsDevice.Viewport);
-                    camera.Update(player.Position);
-                    gameLogic.Update();
-                    if (gameLogic.GoalReached)
-                    {
-                        CurrGameState = GameState.EndScreen;
-                    }
-                    break;
-
-                case GameState.EndScreen:
-                    endScreen.Update(gameTime);
-                    CurrGameState = (GameState)gameMenu.LevelChosen+5;
-                    break;
-
-                default:
-                    gameMenu.Update(gameTime);
-                    CurrGameState = (GameState)gameMenu.LevelChosen;
-                    break;
-            }
-
-            
+            gameController.Update(gameTime);        
             
             base.Update(gameTime);
         }
@@ -245,35 +150,11 @@ namespace Game1
         {
             GraphicsDevice.Clear(RandomColorGenerator.CurrentColor);
 
-            switch (CurrGameState)
-            {
-                case GameState.Level1:
-                    var viewMatrix = camera.GetViewMatrix();
-                    spriteBatch.Begin(transformMatrix: viewMatrix);
-                    level1.Draw(spriteBatch); //testen of het echt obsolete is
-                    player.Draw(spriteBatch);
-                    gameLogic.Draw(spriteBatch);
-                    break;
-
-                case GameState.Level2:
-                    var viewMatrix1 = camera.GetViewMatrix();
-                    spriteBatch.Begin(transformMatrix: viewMatrix1);
-                    level2.Draw(spriteBatch); //testen of het echt obsolete is
-                    player.Draw(spriteBatch);
-                    gameLogic.Draw(spriteBatch);
-                    break;
-
-                case GameState.EndScreen:
-                    spriteBatch.Begin();
-                    endScreen.Draw(spriteBatch, GraphicsDevice.Viewport);
-                    break;
-
-                default:
-                    //Debug.WriteLine(CurrGameState);
-                    spriteBatch.Begin();
-                    gameMenu.Draw(spriteBatch, GraphicsDevice.Viewport);
-                    break;
-            }
+            var viewMatrix = camera.GetViewMatrix();
+            spriteBatch.Begin(transformMatrix: viewMatrix);
+            gameController.Draw(spriteBatch);
+            //player.Draw(spriteBatch);
+            //gameLogic.Draw(spriteBatch);
 
             spriteBatch.End();
             base.Draw(gameTime);
