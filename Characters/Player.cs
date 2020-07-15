@@ -11,16 +11,18 @@ namespace Game1
     class Player : Character
     {
         Controller controller;
+        Viewport viewport;
 
-        public Player( AnimationEngine animation, MovementEngine mover, Controller controller) :base( animation, mover)
+        public Player( AnimationEngine animation, MovementEngine mover, Controller controller, Viewport viewport) :base( animation, mover)
         {
-            this.controller = controller; 
+            this.controller = controller;
+            this.viewport = viewport;
         }
 
-        public override void Update(GameTime gameTime, Viewport viewport) //1 klasse die link tusse controller en klasse doet
+        public override void Update(GameTime gameTime) //1 klasse die link tusse controller en klasse doet
         {
-            base.Update(gameTime, viewport);
-            controller.Update();
+            base.Update(gameTime);
+            controller.Update(gameTime);
             
             if (controller.Left)
             {

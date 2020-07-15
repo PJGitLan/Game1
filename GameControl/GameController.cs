@@ -42,7 +42,7 @@ namespace Game1.GameControl
         //Doet meer dan 1 ding moet opgesplitst worden
 
         public void Endscreen(double score)
-        {
+         {
             screen = gameState.EndScreen(score, screens);
         }
 
@@ -58,6 +58,7 @@ namespace Game1.GameControl
 
         public void Update(GameTime gameTime)
         {
+            Console.WriteLine(gameState);
             screen.Update(gameTime);
         }
 

@@ -14,12 +14,14 @@ namespace Game1
         public bool Right { get; set; }
         public bool Up { get; set; }
         // public bool down { get; set; }
-        public abstract void Update();
+        public bool Select { get; set; }
+        public abstract void Update(GameTime gameTime);
     }
 
     public class TheKeyBoard : Controller
     {
-        public override void Update()
+        float elapsed;
+        public override void Update(GameTime gameTime)
         {
             KeyboardState key = Keyboard.GetState();
 
@@ -49,12 +51,28 @@ namespace Game1
             {
                 Up = false;
             }
+
+            elapsed += gameTime.ElapsedGameTime.Milliseconds;
+            if (key.IsKeyDown(Keys.Enter))
+            {
+                if (elapsed > 500)
+                {
+                    elapsed = 0;
+                    Select = true;
+                }
+                else { Select = false; }    
+            }
+
+            if (key.IsKeyUp(Keys.Enter))
+            {
+                Select = false;
+            }
         }
     }
     
     public class PS4controller : Controller
     {
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
             throw new NotImplementedException();
         }
@@ -62,7 +80,7 @@ namespace Game1
 
     public class XBOX1Controller : Controller
     {
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
             throw new NotImplementedException();
         }

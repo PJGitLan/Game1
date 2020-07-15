@@ -12,9 +12,9 @@ namespace Game1
     
     abstract class Character : ICollidable
     {
-        public Vector2 Position { get; set; }
+        public Vector2 Position { get; private set; }
         Rectangle collisionRectangle;
-        protected MovementEngine mover;
+        /*protected*/ public MovementEngine mover;
         protected AnimationEngine animation;
        
 
@@ -26,7 +26,7 @@ namespace Game1
             this.mover = mover;
             this.animation = animationEngine;
         }
-        public virtual void Update(GameTime gameTime, Viewport viewport)
+        public virtual void Update(GameTime gameTime)
         { 
             CollisionRect = new Rectangle((int)Position.X, (int)Position.Y, 60, 64);
             mover.Update(gameTime, this);

@@ -26,7 +26,6 @@ namespace Game1
 
         Controller controller;
         Viewport viewport;
-        float elapsed;
 
         private ISetStateBehavior stateBehavior { get; set; }
         private GameController gameController { get; set; }
@@ -50,11 +49,7 @@ namespace Game1
 
         public void Update(GameTime gameTime)
         {
-            
-            elapsed += gameTime.ElapsedGameTime.Milliseconds;
-            controller.Update();
-            //if (elapsed > 100 ) //check time between "levelselected" value switch instead of time between click. nvm probably won't work
-            //{
+            controller.Update(gameTime);
                 if (controller.Right)
                 {
                     if (levelSelected < levelOptions.Count-1)
@@ -80,10 +75,8 @@ namespace Game1
                         levelSelected = 0;
                     }
                 }
-                //elapsed = 0;
-            //}
 
-            if (controller.Up)
+            if (controller.Select)
             {
                 LevelChosen = levelSelected+1;
                 stateBehavior.SetState(LevelChosen, gameController);
@@ -102,7 +95,7 @@ namespace Game1
             {
                 float dividend = 1 + 2 * i;
                 float divisor = levelOptions.Count * 2;
-                float quotient = dividend / divisor; //gebruik van apart var omdat formule niet klopte bij het gebruik van mathematische haakjes
+                float quotient = dividend / divisor;
                 
                 size = regularFont.MeasureString(option);
 

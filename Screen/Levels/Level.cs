@@ -11,18 +11,17 @@ using System.Threading.Tasks;
 
 namespace Game1
 {
-    public abstract class Level : IScreen
+    abstract class Level
     {
         protected byte[,] ByteArray;
         Block[,] blockArray;
         List<Texture2D> blockTextures;
+        CollidablesHandler collider;
 
-        private ISetStateBehavior stateBehavior { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        private GameController gameController { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-        public Level(List<Texture2D> _blockTextures)
+        public Level(List<Texture2D> blockTextures, CollidablesHandler collider)
         {
-            blockTextures = _blockTextures;
+            this.blockTextures = blockTextures;
+            this.collider = collider;
             LoadByteList();
             blockArray = new Block[ByteArray.GetLength(0), ByteArray.GetLength(1)];
             LoadBlocks();
@@ -42,7 +41,7 @@ namespace Game1
                         if (ByteArray[rij, kolom] == i+1)
                         {
                             blockArray[rij, kolom] = new Block(new Vector2(kolom * blockTexture.Width, rij * blockTexture.Height), blockTexture); ;
-                            Collider.addCollider(blockArray[rij, kolom]);
+                            collider.addCollider(blockArray[rij, kolom]);
                         }
                         i++;
                     }
@@ -50,7 +49,6 @@ namespace Game1
             }
         }
 
-        [Obsolete]
         public void Draw(SpriteBatch spriteBatch)
         {
             for (int x = 0; x < ByteArray.GetLength(0); x++)

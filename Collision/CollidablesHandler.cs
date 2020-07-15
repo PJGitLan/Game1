@@ -7,21 +7,21 @@ using System.Threading.Tasks;
 
 namespace Game1
 {
-    static class Collider // Should it be a static or regular function?
+    class CollidablesHandler // Should it be a static or regular function?
     {
-        static List<ICollidable> collidables = new List<ICollidable>();
+        List<ICollidable> collidables = new List<ICollidable>();
 
-        static public void addCollider(ICollidable colidableObject)
+        public void addCollider(ICollidable colidableObject)
         {
             collidables.Add(colidableObject);
         }
 
-        static public void ClearColliders()
+        public void ClearColliders()
         {
             collidables.Clear();
         }
 
-        static public List<ICollidable> CheckCollider(ICollidable source)
+        public List<ICollidable> CheckCollider(ICollidable source)
         {
             List<ICollidable> collisions = new List<ICollidable>();
             foreach (var collidable in collidables)

@@ -19,14 +19,14 @@ namespace Game1
         Vector2 prevPosition;
         float animationTime;
 
-        public AnimationEngine(Texture2D _textureRight, Texture2D _textureLeft, int _frameWidth, int _framesAmount)
+        public AnimationEngine(Texture2D textureRight, Texture2D textureLeft, int frameWidth, int framesAmount)
         {
-            textureLeft = _textureLeft;
-            textureRight = _textureRight;
-            Texture = _textureLeft;
-            frameWidth = _frameWidth;
-            framesAmount = _framesAmount;
-            prevPosition = new Vector2(0,0);
+            this.textureLeft = textureLeft;
+            this.textureRight = textureRight;
+            this.Texture = textureLeft;
+            this.frameWidth = frameWidth;
+            this.framesAmount = framesAmount;
+            this.prevPosition = new Vector2(0,0);
         }
 
         public void MoveLeft()

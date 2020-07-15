@@ -9,7 +9,7 @@ namespace Game1
 {
     class Level2 : Level
     {
-        public Level2(List<Texture2D> _blockTextures) : base(_blockTextures)
+        public Level2(List<Texture2D> blockTextures, CollidablesHandler collidablesHandler) : base(blockTextures, collidablesHandler)
         {
 
         }

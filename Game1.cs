@@ -1,5 +1,7 @@
-﻿using Game1.GameControl;
+﻿using Game1.Collision;
+using Game1.GameControl;
 using Game1.Screen;
+using Game1.Screen.Levels;
 using Game1.Screen.MenuItems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -21,9 +23,8 @@ namespace Game1
         
         float elapsed;
         Camera camera;
-        
+
         Controller keyboard;
-        GameLogic gameLogic;
         List<IScreen> screens;
         GameController gameController;
 
@@ -82,18 +83,35 @@ namespace Game1
             List<SpriteFont> fonts = new List<SpriteFont>() { Content.Load<SpriteFont>("titelFont"),
                                              Content.Load<SpriteFont>("selectedFont"), 
                                              Content.Load<SpriteFont>("regularFont") };
+            CollidablesHandler collidablesHandler1 = new CollidablesHandler();
+            
+            Player player1 = new Player(new AnimationEngine(walkingFatManRight, walkingFatManLeft, 64, 8), //should this be in constructor. should I set picture on the class itself etc
+                                new MovementEngine(new Vector2(200, 200),
+                                new Vector2(0.40f, 0.40f),
+                                new Vector2(0.01f, 0.01f), new CollisionHandler(collidablesHandler1)),
+                                keyboard,
+                                GraphicsDevice.Viewport);
+            
+            CollidablesHandler collidablesHandler2 = new CollidablesHandler();
+
+            Player player2 = new Player(new AnimationEngine(walkingFatManRight, walkingFatManLeft, 64, 8), //should this be in constructor. should I set picture on the class itself etc
+                                new MovementEngine(new Vector2(200, 200),
+                                new Vector2(0.40f, 0.40f),
+                                new Vector2(0.01f, 0.01f), new CollisionHandler(collidablesHandler2)),
+                                keyboard,
+                                GraphicsDevice.Viewport);
 
             //Level1
-            Level level1 = new Level1(blocksLevel1);
-            Player player = new Player(new AnimationEngine(walkingFatManRight, walkingFatManLeft, 64, 8), //should this be in constructor. should I set picture on the class itself etc
-                                new MovementEngine(new Vector2(200, 200),
-                                new Vector2(0.35f, 0.35f),
-                                new Vector2(0.01f, 0.01f)),
-                                keyboard);
-            gameLogic = new GameLogic(new Finish(new Vector2(6000, 200), Content.Load<Texture2D>("cheeseburger")), player);
+            Finish finish1 = new Finish(new Block(new Vector2(2250, 280), Content.Load<Texture2D>("cheeseburger")), player1);
+            Level level1 = new Level1(blocksLevel1, collidablesHandler1);
+            LevelController levelController1 = new LevelController(player1, finish1, level1, gameController, camera);
+
 
             //Level2
-            Level level2 = new Level2(blocksLevel2);
+            Finish finish2 = new Finish(new Block(new Vector2(2250, 280), Content.Load<Texture2D>("cheeseburger")), player2);
+            Level level2 = new Level2(blocksLevel2, collidablesHandler2);
+            LevelController levelController2 = new LevelController(player2, finish2, level2, gameController, camera);
+
 
             //GameMenu
             List<String> options = new List<string>() { "Level 1", "Level 2" };
@@ -101,9 +119,9 @@ namespace Game1
 
             //EndScreen
             options = new List<string>() { "Back To Menu" };
-            GameMenu endScreen = new GameMenu(fonts, keyboard, "Level, finished!", "To select press up", options, GraphicsDevice.Viewport, gameController, new MainMenuSetStateBehavior());//Ibehavior moet nog worden geupdate
+            GameMenu endScreen = new GameMenu(fonts, keyboard, "Level, finished!", "To select press up", options, GraphicsDevice.Viewport, gameController, new EndScreenSetStateBehavior());
 
-            screens = new List<IScreen>() { level1, level2, gameMenu, endScreen };
+            screens = new List<IScreen>() { levelController1, levelController2, gameMenu, endScreen };
 
             gameController.addScreens(screens);
 
@@ -137,8 +155,8 @@ namespace Game1
                 elapsed = 0;
             }
 
-            gameController.Update(gameTime);        
-            
+            gameController.Update(gameTime);
+
             base.Update(gameTime);
         }
         
@@ -153,8 +171,6 @@ namespace Game1
             var viewMatrix = camera.GetViewMatrix();
             spriteBatch.Begin(transformMatrix: viewMatrix);
             gameController.Draw(spriteBatch);
-            //player.Draw(spriteBatch);
-            //gameLogic.Draw(spriteBatch);
 
             spriteBatch.End();
             base.Draw(gameTime);

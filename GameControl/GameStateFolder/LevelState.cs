@@ -18,7 +18,7 @@ namespace Game1.GameControl.GameStateFolder
 
         public IScreen EndScreen(double score, List<IScreen> screens)
         {
-            Console.WriteLine("level finished show reults");
+            Console.WriteLine("level finished show results");
             gameController.gameState = gameController.endscreen;
             return screens[screens.Count - 1];
         }

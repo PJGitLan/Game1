@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Game1.Collision;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -13,19 +14,22 @@ namespace Game1
         //properties private maken
         public Vector2 maxVelocity { get; set; } 
         public Vector2 Position { get; set; }
-        public Vector2 Velocity { get; private set; } 
-        public Vector2 Acceleration { get; set; } 
+        public Vector2 Velocity { get; set; } 
+        public Vector2 Acceleration { get; set; }
+
+        CollisionHandler collisionHandler;
 
         public bool IsLanded { get; set; } = false;
 
         float deltaTime;
         float timeSinceJump;
 
-        public MovementEngine(Vector2 position, Vector2 maxVelocity, Vector2 acceleration)
+        public MovementEngine(Vector2 position, Vector2 maxVelocity, Vector2 acceleration, CollisionHandler collisionHandler)
         {
             Position = position;
             this.maxVelocity = maxVelocity;
             Acceleration = acceleration;
+            this.collisionHandler = collisionHandler;
         }
 
         public void MoveLeft()
@@ -55,7 +59,7 @@ namespace Game1
                 Velocity = new Vector2(Velocity.X, Velocity.Y + Acceleration.Y * deltaTime);   
         }
 
-        public void UpdatePosition(ICollidable character)
+        public void UpdatePosition(Character character)
         {
             SpeedCheck();
 
@@ -75,7 +79,7 @@ namespace Game1
 
             Velocity = new Vector2(Velocity.X, Velocity.Y + Acceleration.Y / 6 * deltaTime);
 
-            CollisoinCheck(character);
+            collisionHandler.CollisionCheck(character); 
 
             Position = Position + Velocity * deltaTime;
         }
@@ -102,56 +106,8 @@ namespace Game1
                 Velocity = new Vector2(Velocity.X, -maxVelocity.Y);
             }
         }
-
-        private void CollisoinCheck(ICollidable character)
-        {
-            List<ICollidable> tmp;
-            tmp = Collider.CheckCollider(character);
-
-            foreach (var collidable in tmp)
-            {
-                if (character.TouchLeftOf(collidable))//Left
-                {
-                    if (Velocity.X < 0)
-                    {
-                        Velocity = new Vector2(0, Velocity.Y);
-                    }
-                }
-
-                if (character.TouchRightOf(collidable))//Right
-                {
-                    if (Velocity.X > 0)
-                    {
-                        Velocity = new Vector2(0, Velocity.Y);
-                    }
-                }
-
-                if (character.TouchTopOf(collidable)) //Below
-                {
-                    if (Velocity.Y > 0)
-                    {
-                        //Position = new Vector2(Position.X, collidable.CollisionRect.Top - character.CollisionRect.Height);
-                        Velocity = new Vector2(Velocity.X, 0);
-                        IsLanded = true;
-                        //hasJumped = false;
-                    }
-                }
-
-                if (character.TouchBottomOf(collidable))//On top
-                {
-                    if (Velocity.Y <  0)
-                    {
-                        Position = new Vector2(Position.X, collidable.CollisionRect.Bottom - 1);
-                        Velocity = new Vector2(Velocity.X, 0f);
-                        Debug.WriteLine("touching bottom");
-                    }
-                }
-            }
-
-
-        }
          
-        public void Update(GameTime gameTime, ICollidable character)
+        public void Update(GameTime gameTime, Character character)
         {
             deltaTime = gameTime.ElapsedGameTime.Milliseconds;
             timeSinceJump += 20;

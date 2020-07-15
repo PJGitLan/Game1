@@ -26,6 +26,7 @@ namespace Game1.GameControl.GameStateFolder
         {
             //Console.WriteLine("load level builder");
             gameController.gameState = gameController.level;
+            //Collider.ClearColliders();
             return screens[levelnr - 1];
         }
 

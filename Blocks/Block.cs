@@ -27,10 +27,10 @@ namespace Game1
             CollisionRect = new Rectangle((int) position.X, (int) position.Y, texture.Width, texture.Height);
         }
 
-        [Obsolete]
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, new Vector2(position.X, position.Y));
+            spriteBatch.Draw(texture, new Vector2(position.X, position.Y), Color.White);
+
         }
     }
 }
