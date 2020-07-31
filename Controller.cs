@@ -80,9 +80,58 @@ namespace Game1
 
     public class XBOX1Controller : Controller
     {
+        float elapsed;
         public override void Update(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            var key = GamePad.GetState(PlayerIndex.One);
+
+            if (key.IsConnected)
+            {
+                Console.WriteLine("connected");
+            }
+
+            if (key.IsButtonDown(Buttons.DPadLeft))
+            {
+                Left = true;
+            }
+            if (key.IsButtonUp(Buttons.DPadLeft))
+            {
+                Left = false;
+            }
+
+            if (key.IsButtonDown(Buttons.DPadRight))
+            {
+                Right = true;
+            }
+            if (key.IsButtonUp(Buttons.DPadRight))
+            {
+                Right = false;
+            }
+
+            if (key.IsButtonDown(Buttons.DPadUp))
+            {
+                Up = true;
+            }
+            if (key.IsButtonUp(Buttons.DPadUp))
+            {
+                Up = false;
+            }
+
+            elapsed += gameTime.ElapsedGameTime.Milliseconds;
+            if (key.IsButtonDown(Buttons.A))
+            {
+                if (elapsed > 500)
+                {
+                    elapsed = 0;
+                    Select = true;
+                }
+                else { Select = false; }
+            }
+
+            if (key.IsButtonUp(Buttons.A))
+            {
+                Select = false;
+            }
         }
-    }
+    }   
 }

@@ -18,6 +18,7 @@ namespace Game1.Screen.Levels
         Level level;
         Camera camera;
         Vector2 origCameraPos;
+        public Timer Timer { get; private set; }
         private GameController gameController { get; set ; }
 
         public LevelController(Player player, Finish finish, Level level, GameController gameController, Camera camera)
@@ -29,6 +30,7 @@ namespace Game1.Screen.Levels
             this.gameController = gameController;
             this.camera = camera;
             origCameraPos = camera.Position;
+            Timer = new Timer();
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -36,7 +38,7 @@ namespace Game1.Screen.Levels
             level.Draw(spriteBatch);
             player.Draw(spriteBatch);
             finish.Draw(spriteBatch);
-            Console.WriteLine(player.Position);
+            //Console.WriteLine(player.Position);
         }
 
         public void Update(GameTime gameTime)
@@ -45,15 +47,16 @@ namespace Game1.Screen.Levels
             player.Update(gameTime);
             camera.Update(player.Position);
             finish.Update();
+            Timer.Update(gameTime);
             if (finish.GoalReached == true)
             {
-                Console.WriteLine("reset level");
+                //Console.WriteLine("reset level");
                 player.mover.Position = origPlayerPos;
                 player.Update(gameTime);
                 camera.Position = origCameraPos;
-                Console.WriteLine(player.Position);
+                //Console.WriteLine(player.Position);
       
-                gameController.Endscreen(0);
+                gameController.Endscreen(Timer.Stop());
             }
         }
     }

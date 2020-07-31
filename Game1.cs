@@ -43,12 +43,13 @@ namespace Game1
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            
+
             //set initial background color
             GraphicsDevice.Clear(RandomColorGenerator.Next());
 
             //initialize a controller and camera
             camera = new Camera(GraphicsDevice.Viewport, new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2)); //why don't do this in constructor
+            //keyboard = new XBOX1Controller();
             keyboard = new TheKeyBoard();
 
             base.Initialize();
@@ -115,11 +116,11 @@ namespace Game1
 
             //GameMenu
             List<String> options = new List<string>() { "Level 1", "Level 2" };
-            GameMenu gameMenu = new GameMenu(fonts, keyboard, "Hamburger Hunt", "To select press up", options, GraphicsDevice.Viewport, gameController, new MainMenuSetStateBehavior());
+            GameMenu gameMenu = new GameMenu(fonts, keyboard, "Hamburger Hunt", "Speedrun game", options, GraphicsDevice.Viewport, gameController, new MainMenuSetStateBehavior());
 
             //EndScreen
             options = new List<string>() { "Back To Menu" };
-            GameMenu endScreen = new GameMenu(fonts, keyboard, "Level, finished!", "To select press up", options, GraphicsDevice.Viewport, gameController, new EndScreenSetStateBehavior());
+            GameMenu endScreen = new GameMenu(fonts, keyboard, "Level, finished!", "press enter or x to go to main menu ", options, GraphicsDevice.Viewport, gameController, new EndScreenSetStateBehavior());
 
             screens = new List<IScreen>() { levelController1, levelController2, gameMenu, endScreen };
 

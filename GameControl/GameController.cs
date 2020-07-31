@@ -58,7 +58,7 @@ namespace Game1.GameControl
 
         public void Update(GameTime gameTime)
         {
-            Console.WriteLine(gameState);
+            //Console.WriteLine(gameState);
             screen.Update(gameTime);
         }
 

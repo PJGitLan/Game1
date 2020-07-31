@@ -15,7 +15,7 @@ namespace Game1
     class GameMenu : IScreen
     { 
         String titel;
-        String message; 
+        public String message { private get; set; } 
         List<String> levelOptions = new List<String>();
         int levelSelected;
         public int LevelChosen { get; private set; } = 0;

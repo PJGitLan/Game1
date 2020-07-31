@@ -9,12 +9,10 @@ namespace Game1.Collision
 {
     class CollisionHandler
     {
-        //private Character character;
         private CollidablesHandler colliders;
 
         public CollisionHandler(CollidablesHandler colliders)
         {
-           // this.character = character;
             this.colliders = colliders;
         }
 
@@ -46,10 +44,8 @@ namespace Game1.Collision
                 {
                     if (ch.Velocity.Y > 0)
                     {
-                        //Position = new Vector2(Position.X, collidable.CollisionRect.Top - character.CollisionRect.Height);
                         ch.Velocity = new Vector2(ch.Velocity.X, 0);
                         ch.IsLanded = true;
-                        //hasJumped = false;
                     }
                 }
 
@@ -59,7 +55,6 @@ namespace Game1.Collision
                     {
                         ch.Position = new Vector2(ch.Position.X, collidable.CollisionRect.Bottom - 1);
                         ch.Velocity = new Vector2(ch.Velocity.X, 0f);
-                        //Debug.WriteLine("touching bottom");
                     }
                 }
             }

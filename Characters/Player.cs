@@ -19,7 +19,7 @@ namespace Game1
             this.viewport = viewport;
         }
 
-        public override void Update(GameTime gameTime) //1 klasse die link tusse controller en klasse doet
+        public override void Update(GameTime gameTime) //1 klasse die link tussen controller en klasse doet
         {
             base.Update(gameTime);
             controller.Update(gameTime);

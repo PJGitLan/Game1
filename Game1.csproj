@@ -52,6 +52,7 @@
     <Compile Include="Collision\CollisionHandler.cs" />
     <Compile Include="Controller.cs" />
     <Compile Include="Screen\Levels\LevelController.cs" />
+    <Compile Include="Screen\Levels\Timer.cs" />
     <Compile Include="Screen\MenuItems\ISetStateBehavior.cs" />
     <Compile Include="Screen\MenuItems\EndScreenSetStateBehavior.cs" />
     <Compile Include="Screen\MenuItems\MainMenuSetStateBehavior.cs" />

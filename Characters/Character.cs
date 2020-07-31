@@ -14,7 +14,7 @@ namespace Game1
     {
         public Vector2 Position { get; private set; }
         Rectangle collisionRectangle;
-        /*protected*/ public MovementEngine mover;
+        public MovementEngine mover;
         protected AnimationEngine animation;
        
 

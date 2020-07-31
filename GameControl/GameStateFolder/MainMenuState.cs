@@ -1,4 +1,5 @@
 ﻿using Game1.Screen;
+using Game1.Screen.Levels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,14 @@ namespace Game1.GameControl.GameStateFolder
             //Console.WriteLine("load level builder");
             gameController.gameState = gameController.level;
             //Collider.ClearColliders();
+            if (screens[levelnr - 1] is LevelController)
+            {
+                LevelController temp = (LevelController)screens[levelnr - 1];
+                temp.Timer.Start();
+                Console.WriteLine("Timer started");
+
+                screens[levelnr - 1] = temp;
+            }
             return screens[levelnr - 1];
         }
 

@@ -1,5 +1,6 @@
 ﻿using Game1.Screen;
 using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,12 @@ namespace Game1.GameControl.GameStateFolder
         {
             Console.WriteLine("level finished show results");
             gameController.gameState = gameController.endscreen;
+            if(screens[screens.Count - 1] is GameMenu)
+            {
+                GameMenu temp = (GameMenu)screens[screens.Count - 1];
+                temp.message = $"Completed in {score}ms";
+                screens[screens.Count - 1] = temp;
+            }
             return screens[screens.Count - 1];
         }
 
