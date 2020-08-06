@@ -88,8 +88,8 @@ namespace Game1
             
             Player player1 = new Player(new AnimationEngine(walkingFatManRight, walkingFatManLeft, 64, 8), //should this be in constructor. should I set picture on the class itself etc
                                 new MovementEngine(new Vector2(200, 200),
-                                new Vector2(0.40f, 0.40f),
-                                new Vector2(0.01f, 0.01f), new CollisionHandler(collidablesHandler1)),
+                                    new Vector2(0.40f, 0.40f), // new Vector2(0.42  f, 0.40f),
+                                    new Vector2(0.01f, 0.01f), new CollisionHandler(collidablesHandler1)),
                                 keyboard,
                                 GraphicsDevice.Viewport);
             

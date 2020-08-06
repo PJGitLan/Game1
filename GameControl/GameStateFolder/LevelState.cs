@@ -24,7 +24,7 @@ namespace Game1.GameControl.GameStateFolder
             if(screens[screens.Count - 1] is GameMenu)
             {
                 GameMenu temp = (GameMenu)screens[screens.Count - 1];
-                temp.message = $"Completed in {score}ms";
+                temp.message = $"Completed in {score/1000}s";
                 screens[screens.Count - 1] = temp;
             }
             return screens[screens.Count - 1];

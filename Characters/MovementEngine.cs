@@ -63,16 +63,16 @@ namespace Game1
         {
             SpeedCheck();
 
-            if (Velocity.X > 0.01)
+            if (Velocity.X > 0.02)
             {
                 Velocity = new Vector2(Velocity.X - Acceleration.X / 4 * deltaTime, Velocity.Y);
             }
-            if (Velocity.X < -0.01)
+            if (Velocity.X < -0.02)
             {
                 Velocity = new Vector2(Velocity.X + Acceleration.X / 4 * deltaTime, Velocity.Y);
             }
 
-            if (Velocity.X >= -0.01 && Velocity.X <= 0.01)
+            if (Velocity.X >= -0.02 && Velocity.X <= 0.02)
             {
                 Velocity = new Vector2(0, Velocity.Y);
             }
