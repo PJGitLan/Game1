@@ -12,7 +12,7 @@ namespace Game1
     {
         Controller controller;
         Viewport viewport;
-
+        
         public Player( AnimationEngine animation, MovementEngine mover, Controller controller, Viewport viewport) :base( animation, mover)
         {
             this.controller = controller;
@@ -41,7 +41,7 @@ namespace Game1
 
             if(Position.Y > viewport.Bounds.Bottom + 50)
             {
-                mover.Position = new Vector2(200, 200); //Hardcode origin
+                ToSpawn();
             }
         }
     }

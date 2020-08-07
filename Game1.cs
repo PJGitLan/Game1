@@ -1,11 +1,14 @@
-﻿using Game1.Collision;
+﻿using Game1.Characters;
+using Game1.Collision;
 using Game1.GameControl;
 using Game1.Screen;
 using Game1.Screen.Levels;
+using Game1.Screen.Levels.LevelControl;
 using Game1.Screen.MenuItems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -27,6 +30,7 @@ namespace Game1
         Controller keyboard;
         List<IScreen> screens;
         GameController gameController;
+        Song song;
 
         public Game1()
         {
@@ -61,6 +65,9 @@ namespace Game1
         /// </summary>
         protected override void LoadContent()
         {
+            // Music from: https://www.fesliyanstudios.com/royalty-free-music/downloads-c/8-bit-music/6
+            song = Content.Load<Song>("8bitMusic");
+            MediaPlayer.Play(song);
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
@@ -87,7 +94,7 @@ namespace Game1
             CollidablesHandler collidablesHandler1 = new CollidablesHandler();
             
             Player player1 = new Player(new AnimationEngine(walkingFatManRight, walkingFatManLeft, 64, 8), //should this be in constructor. should I set picture on the class itself etc
-                                new MovementEngine(new Vector2(200, 200),
+                                new MovementEngine(new Vector2(200, 300),
                                     new Vector2(0.40f, 0.40f), // new Vector2(0.42  f, 0.40f),
                                     new Vector2(0.01f, 0.01f), new CollisionHandler(collidablesHandler1)),
                                 keyboard,
@@ -105,13 +112,44 @@ namespace Game1
             //Level1
             Finish finish1 = new Finish(new Block(new Vector2(2250, 280), Content.Load<Texture2D>("cheeseburger")), player1);
             Level level1 = new Level1(blocksLevel1, collidablesHandler1);
-            LevelController levelController1 = new LevelController(player1, finish1, level1, gameController, camera);
+            LevelController levelController1 = new BasicLevelController(player1, finish1, level1, gameController, camera);
 
 
             //Level2
             Finish finish2 = new Finish(new Block(new Vector2(2250, 280), Content.Load<Texture2D>("cheeseburger")), player2);
             Level level2 = new Level2(blocksLevel2, collidablesHandler2);
-            LevelController levelController2 = new LevelController(player2, finish2, level2, gameController, camera);
+
+            Texture2D skaterR = Content.Load<Texture2D>("skaterRight");
+            Texture2D skaterL = Content.Load<Texture2D>("skaterLeft");
+
+            Texture2D GreenHoodR = Content.Load<Texture2D>("greenHoodieRight");
+            Texture2D GreenHoodL = Content.Load<Texture2D>("greenHoodieLeft");
+
+            List<Npc> Enemies = new List<Npc>(){
+                new Npc(
+                        new AnimationEngine(skaterR, skaterL, 64, 8),
+                        new MovementEngine(
+                            new Vector2(800, 20),
+                            new Vector2(0.50f, 0.40f),
+                            new Vector2(0.01f, 0.01f), new CollisionHandler(collidablesHandler2)
+                        ),
+                        GraphicsDevice.Viewport,
+                        3000,
+                        5000
+                    ),
+                 new Npc(
+                        new AnimationEngine(GreenHoodR, GreenHoodL, 64, 8),
+                        new MovementEngine(
+                            new Vector2(1400, 200),
+                            new Vector2(0.40f, 0.40f),
+                            new Vector2(0.01f, 0.01f), new CollisionHandler(collidablesHandler2)
+                        ),
+                        GraphicsDevice.Viewport,
+                        6000,
+                        5000
+                    )
+            };
+            LevelController levelController2 = new EnemiesDecorator(new BasicLevelController(player2, finish2, level2, gameController, camera),Enemies);
 
 
             //GameMenu

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <SourceFile>D:/DocumentsHDD/AP/Game Development/Game1/Content/8bitMusic.mp3</SourceFile>
+  <SourceTime>2020-08-07T03:47:27.1269737+02:00</SourceTime>
+  <DestFile>D:/DocumentsHDD/AP/Game Development/Game1/Content/bin/Windows/Content/8bitMusic.xnb</DestFile>
+  <DestTime>2020-08-07T03:52:24.2528994+02:00</DestTime>
+  <Importer>Mp3Importer</Importer>
+  <ImporterTime>2018-12-08T17:35:54+01:00</ImporterTime>
+  <Processor>SongProcessor</Processor>
+  <ProcessorTime>2018-12-08T17:35:54+01:00</ProcessorTime>
+  <Parameters>
+    <Key>Quality</Key>
+    <Value>Best</Value>
+  </Parameters>
+  <Dependencies />
+  <BuildAsset />
+  <BuildOutput>
+    <string>D:/DocumentsHDD/AP/Game Development/Game1/Content/bin/Windows/Content/8bitMusic.wma</string>
+  </BuildOutput>
+</PipelineBuildEvent>

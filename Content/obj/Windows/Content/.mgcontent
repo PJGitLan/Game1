@@ -4,7 +4,16 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
+    <File>D:/DocumentsHDD/AP/Game Development/Game1/Content/../../Sprites/players/walkingFatMan.png</File>
+    <File>D:/DocumentsHDD/AP/Game Development/Game1/Content/../../Sprites/players/walkingFatManLeft.png</File>
+    <File>D:/DocumentsHDD/AP/Game Development/Game1/Content/8bitMusic.mp3</File>
+    <File>D:/DocumentsHDD/AP/Game Development/Game1/Content/bodyWarmerRedLeft.png</File>
+    <File>D:/DocumentsHDD/AP/Game Development/Game1/Content/bodyWarmerRedRight.png</File>
     <File>D:/DocumentsHDD/AP/Game Development/Game1/Content/cheeseburger.png</File>
+    <File>D:/DocumentsHDD/AP/Game Development/Game1/Content/greenHoodieLeft.png</File>
+    <File>D:/DocumentsHDD/AP/Game Development/Game1/Content/greenHoodieRight.png</File>
+    <File>D:/DocumentsHDD/AP/Game Development/Game1/Content/hikerLeft.png</File>
+    <File>D:/DocumentsHDD/AP/Game Development/Game1/Content/hikerRight.png</File>
     <File>D:/DocumentsHDD/AP/Game Development/Game1/Content/isometric_pixel_flat_0000.png</File>
     <File>D:/DocumentsHDD/AP/Game Development/Game1/Content/isometric_pixel_flat_0001.png</File>
     <File>D:/DocumentsHDD/AP/Game Development/Game1/Content/isometric_pixel_flat_0002.png</File>
@@ -236,13 +245,42 @@
     <File>D:/DocumentsHDD/AP/Game Development/Game1/Content/isometric_pixel_flat_0228.png</File>
     <File>D:/DocumentsHDD/AP/Game Development/Game1/Content/isometric_pixel_flat_0229.png</File>
     <File>D:/DocumentsHDD/AP/Game Development/Game1/Content/isometric_pixel_flat_0230.png</File>
+    <File>D:/DocumentsHDD/AP/Game Development/Game1/Content/overallGuyLeft.png</File>
+    <File>D:/DocumentsHDD/AP/Game Development/Game1/Content/overallGuyRight.png</File>
+    <File>D:/DocumentsHDD/AP/Game Development/Game1/Content/PunkGuyLeft.png</File>
+    <File>D:/DocumentsHDD/AP/Game Development/Game1/Content/PunkGuyRight.png</File>
     <File>D:/DocumentsHDD/AP/Game Development/Game1/Content/regularFont.spritefont</File>
     <File>D:/DocumentsHDD/AP/Game Development/Game1/Content/selectedFont.spritefont</File>
+    <File>D:/DocumentsHDD/AP/Game Development/Game1/Content/skaterLeft.png</File>
+    <File>D:/DocumentsHDD/AP/Game Development/Game1/Content/skaterRight.png</File>
     <File>D:/DocumentsHDD/AP/Game Development/Game1/Content/titelFont.spritefont</File>
     <File>D:/DocumentsHDD/AP/Game Development/Game1/Content/walkingFatMan.png</File>
     <File>D:/DocumentsHDD/AP/Game Development/Game1/Content/walkingFatManLeft.png</File>
+    <File>D:/DocumentsHDD/AP/Game Development/Game1/Content/womanWithBabyLeft.png</File>
+    <File>D:/DocumentsHDD/AP/Game Development/Game1/Content/womanWithBabyRight.png</File>
+    <File>D:/DocumentsHDD/AP/Game Development/Game1/Content/yellowShirtLeft.png</File>
+    <File>D:/DocumentsHDD/AP/Game Development/Game1/Content/yellowShirtRight.png</File>
   </SourceFiles>
   <DestFiles>
+    <File>walkingFatMan.png</File>
+    <File>walkingFatManLeft.png</File>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

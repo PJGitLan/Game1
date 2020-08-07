@@ -48,10 +48,16 @@
     <Compile Include="Blocks\Block.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="Characters\Character.cs" />
+    <Compile Include="Characters\Npc.cs" />
     <Compile Include="Collision\CollidablesHandler.cs" />
     <Compile Include="Collision\CollisionHandler.cs" />
     <Compile Include="Controller.cs" />
-    <Compile Include="Screen\Levels\LevelController.cs" />
+    <Compile Include="ScoreReader.cs" />
+    <Compile Include="ScoreSaver.cs" />
+    <Compile Include="Screen\Levels\LevelControl\BasicLevelController.cs" />
+    <Compile Include="Screen\Levels\LevelControl\EnemiesDecorator.cs" />
+    <Compile Include="Screen\Levels\LevelControl\LevelController.cs" />
+    <Compile Include="Screen\Levels\LevelControl\LevelControllerDecorator.cs" />
     <Compile Include="Screen\Levels\Timer.cs" />
     <Compile Include="Screen\MenuItems\ISetStateBehavior.cs" />
     <Compile Include="Screen\MenuItems\EndScreenSetStateBehavior.cs" />

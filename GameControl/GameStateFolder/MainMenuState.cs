@@ -1,5 +1,6 @@
 ﻿using Game1.Screen;
 using Game1.Screen.Levels;
+using Game1.Screen.Levels.LevelControl;
 using System;
 using System.Collections.Generic;
 using System.Linq;

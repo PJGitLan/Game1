@@ -16,7 +16,8 @@ namespace Game1
         Rectangle collisionRectangle;
         public MovementEngine mover;
         protected AnimationEngine animation;
-       
+        private readonly Vector2 origPos;
+
 
         public Rectangle CollisionRect { get => collisionRectangle; set => collisionRectangle = value; }
 
@@ -25,8 +26,15 @@ namespace Game1
             this.collisionRectangle = new Rectangle((int)Position.X, (int)Position.Y, 60, 64);
             this.mover = mover;
             this.animation = animationEngine;
+            origPos = mover.Position;
         }
-        public virtual void Update(GameTime gameTime)
+
+        public void ToSpawn()
+        {
+            mover.Position = origPos;
+        }
+
+        public virtual void Update(GameTime gameTime) //an abstract method forces derived classes to implement it whereas virtual method is optional.
         { 
             CollisionRect = new Rectangle((int)Position.X, (int)Position.Y, 60, 64);
             mover.Update(gameTime, this);
