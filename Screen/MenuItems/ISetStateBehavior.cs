@@ -9,6 +9,6 @@ namespace Game1.Screen.MenuItems
 {
     interface ISetStateBehavior
     {
-        void SetState(int levelChosen, GameController gameController);
+        void SetState(int optionChosen, GameController gameController);
     }
 }

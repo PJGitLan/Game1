@@ -42,7 +42,7 @@ namespace Game1
                         {
                             blockArray[rij, kolom] = new Block(new Vector2(kolom * blockTexture.Width, rij * blockTexture.Height), blockTexture);
                             //blockArray[rij, kolom] = new Block(new Vector2(kolom * blockTexture.Width, (rij - ByteArray.GetLength(0)) * blockTexture.Height), blockTexture);
-                            Console.WriteLine((rij - ByteArray.GetLength(0)) * blockTexture.Height);
+                           // Console.WriteLine((rij - ByteArray.GetLength(0)) * blockTexture.Height);
                             collider.addCollider(blockArray[rij, kolom]);
                         }
                         i++;

@@ -27,7 +27,7 @@ namespace Game1
         Controller controller;
         Viewport viewport;
 
-        private ISetStateBehavior stateBehavior { get; set; }
+        private ISetStateBehavior StateBehavior { get; set; }
         private GameController gameController { get; set; }
      
 
@@ -38,7 +38,7 @@ namespace Game1
             selectedFont = _fonts[1];
             regularFont = _fonts[2];
             controller = _controller;
-            this.stateBehavior = stateBehavior;
+            this.StateBehavior = stateBehavior;
             this.gameController = gameController;
 
             this.titel = titel;
@@ -79,7 +79,7 @@ namespace Game1
             if (controller.Select)
             {
                 LevelChosen = levelSelected+1;
-                stateBehavior.SetState(LevelChosen, gameController);
+                StateBehavior.SetState(LevelChosen, gameController);
             }
         }
 
@@ -99,7 +99,7 @@ namespace Game1
                 
                 size = regularFont.MeasureString(option);
 
-                if (i == levelSelected)
+                if (i == levelSelected) 
                 {
                     spriteBatch.DrawString(selectedFont, option,
                     new Vector2(viewport.Width * quotient - size.X / 2, viewport.Height * 0.75f - size.Y / 2),

@@ -9,9 +9,10 @@ namespace Game1.Screen.MenuItems
 {
     class MainMenuSetStateBehavior : ISetStateBehavior
     {
-        public void SetState(int levelChosen, GameController gameController)
+        public void SetState(int optionChosen, GameController gameController)
         {
-            gameController.Level(levelChosen);
+            gameController.Lvl = optionChosen;
+            gameController.Level();
         }
     }
 }

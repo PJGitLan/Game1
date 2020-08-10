@@ -10,8 +10,9 @@ namespace Game1.GameControl
     interface IGameState
     {
         IScreen MainMenu(List<IScreen> screens);
-        IScreen Level(int levelnr, List<IScreen> screens);
-        IScreen EndScreen(double score, List<IScreen> screens);
+        IScreen Level(List<IScreen> screens);
+        IScreen EndScreen(List<IScreen> screens);
+        IScreen ScoreScreen(List<IScreen> screens);
 
     }
 }

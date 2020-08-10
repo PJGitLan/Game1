@@ -157,10 +157,14 @@ namespace Game1
             GameMenu gameMenu = new GameMenu(fonts, keyboard, "Hamburger Hunt", "Speedrun game", options, GraphicsDevice.Viewport, gameController, new MainMenuSetStateBehavior());
 
             //EndScreen
-            options = new List<string>() { "Back To Menu" };
-            GameMenu endScreen = new GameMenu(fonts, keyboard, "Level, finished!", "press enter or x to go to main menu ", options, GraphicsDevice.Viewport, gameController, new EndScreenSetStateBehavior());
+            options = new List<string>() { "Top scores", "Main menu" };
+            GameMenu endScreen = new GameMenu(fonts, keyboard, "Level, finished!", "Choose an option", options, GraphicsDevice.Viewport, gameController, new EndScreenSetStateBehavior());
 
-            screens = new List<IScreen>() { levelController1, levelController2, gameMenu, endScreen };
+            //TopScoreScreen
+            options = new List<string>() { "Play Again", "Main Menu" };
+            GameMenu topScoreScreen = new GameMenu(fonts, keyboard, "Top 3 scores", "Choose an option", options, GraphicsDevice.Viewport, gameController, new ScoreScreenSetStateBehavior());
+
+            screens = new List<IScreen>() { levelController1, levelController2,topScoreScreen, gameMenu, endScreen };
 
             gameController.addScreens(screens);
 

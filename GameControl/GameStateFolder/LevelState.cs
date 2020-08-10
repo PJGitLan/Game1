@@ -17,20 +17,25 @@ namespace Game1.GameControl.GameStateFolder
             this.gameController = gameController;
         }
 
-        public IScreen EndScreen(double score, List<IScreen> screens)
+        public IScreen EndScreen(List<IScreen> screens)
         {
-            Console.WriteLine("level finished show results");
             gameController.gameState = gameController.endscreen;
-            if(screens[screens.Count - 1] is GameMenu)
+            double score = gameController.Score;
+
+            ScoreSaver scoreSaver = new ScoreSaver(gameController.Path, gameController.FileName);
+            scoreSaver.SaveTopScore(gameController.Lvl - 1, gameController.Score);
+            
+            if (screens[screens.Count - 1] is GameMenu)
             {
                 GameMenu temp = (GameMenu)screens[screens.Count - 1];
                 temp.message = $"Completed in {score/1000}s";
                 screens[screens.Count - 1] = temp;
+                gameController.Score = score;
             }
             return screens[screens.Count - 1];
         }
 
-        public IScreen Level(int levelnr, List<IScreen> screens)
+        public IScreen Level(List<IScreen> screens)
         {
             throw new System.InvalidOperationException("Already in a level");
 
@@ -41,6 +46,11 @@ namespace Game1.GameControl.GameStateFolder
             Console.WriteLine("exiting level without completion");
             gameController.gameState = gameController.mainMenu;
             return screens[screens.Count - 2];
+        }
+
+        public IScreen ScoreScreen(List<IScreen> screens)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -13,12 +13,17 @@ namespace Game1.GameControl
     class GameController
     {
         //state pattern
+        public int Lvl { get; set; }
+        public double Score { get; set; }
 
-
-        //levelBuilder factory pattern in level state denk ik
+        public readonly string Path = @"C:\speedRunner";
+        public readonly string FileName = @"topScores.txt";
+       
         public IGameState mainMenu { get; set; }
         public IGameState endscreen { get; set; }
         public IGameState level { get; set; }
+        public IGameState scoreScreen { get; set; }
+
         List<IScreen> screens;
         IScreen screen;
         public IGameState gameState { get; set; }
@@ -28,6 +33,8 @@ namespace Game1.GameControl
             mainMenu = new MainMenuState(this);
             endscreen = new EndScreenState(this);
             level = new LevelState(this);
+            scoreScreen = new ScoreScreenState(this);
+
             gameState = mainMenu;
         }
 
@@ -41,19 +48,24 @@ namespace Game1.GameControl
 
         //Doet meer dan 1 ding moet opgesplitst worden
 
-        public void Endscreen(double score)
+        public void Endscreen()
          {
-            screen = gameState.EndScreen(score, screens);
+            screen = gameState.EndScreen(screens);
         }
 
-        public void Level(int levelnr)
+        public void Level()
         {
-            screen = gameState.Level(levelnr, screens);
+            screen = gameState.Level(screens);
         }
 
         public void MainMenu()
         {
            screen = gameState.MainMenu(screens);
+        }
+
+        public void ScoreScreen()
+        {
+            screen = gameState.ScoreScreen(screens);
         }
 
         public void Update(GameTime gameTime)

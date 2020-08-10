@@ -62,8 +62,8 @@ namespace Game1.Screen.Levels
             //Console.WriteLine("reset level");
             camera.Position = origCameraPos;
             Player.ToSpawn();
-            
-            gameController.Endscreen(Timer.Stop());
+            gameController.Score = Timer.Stop();
+            gameController.Endscreen();
         }
     }
 }

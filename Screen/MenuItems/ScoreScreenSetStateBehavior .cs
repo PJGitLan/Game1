@@ -7,16 +7,14 @@ using System.Threading.Tasks;
 
 namespace Game1.Screen.MenuItems
 {
-    class EndScreenSetStateBehavior : ISetStateBehavior
+    class ScoreScreenSetStateBehavior : ISetStateBehavior
     {
-        private int Level { get; set; }
-        private double Score { get; set; }
         public void SetState(int optionChosen, GameController gameController)
         {
             switch (optionChosen)
             {
                 case 1:
-                    gameController.ScoreScreen();
+                    gameController.Level(); //moet veranderd worden door level nr
                     break;
                 case 2:
                     gameController.MainMenu();
