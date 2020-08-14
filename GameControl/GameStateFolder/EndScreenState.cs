@@ -29,7 +29,8 @@ namespace Game1.GameControl.GameStateFolder
         }
 
         public IScreen MainMenu(List<IScreen> screens)
-        {          
+        {
+            gameController.gameState = gameController.mainMenu;
             return screens[screens.Count - 2];
         }
 

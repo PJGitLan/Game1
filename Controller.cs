@@ -1,10 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Game1
 {
@@ -15,6 +11,7 @@ namespace Game1
         public bool Up { get; set; }
         // public bool down { get; set; }
         public bool Select { get; set; }
+        public bool Exit { get; set; }
         public abstract void Update(GameTime gameTime);
     }
 
@@ -55,7 +52,7 @@ namespace Game1
             elapsed += gameTime.ElapsedGameTime.Milliseconds;
             if (key.IsKeyDown(Keys.Enter))
             {
-                if (elapsed > 500)
+                if (elapsed > 250)
                 {
                     elapsed = 0;
                     Select = true;
@@ -66,6 +63,22 @@ namespace Game1
             if (key.IsKeyUp(Keys.Enter))
             {
                 Select = false;
+            }
+
+           
+            if (key.IsKeyDown(Keys.Escape))
+            {
+                if (elapsed > 250)
+                {
+                    elapsed = 0;
+                    Exit = true;
+                }
+                else { Exit = false; }
+            }
+
+            if (key.IsKeyUp(Keys.Escape))
+            {
+                Exit = false;
             }
         }
     }
@@ -78,6 +91,9 @@ namespace Game1
         }
     }
 
+    /// <remarks>
+    /// This class is not tested. Because lack of xbox controller and ps4 controller doesn't seem to be recognized by game.
+    /// </remarks>
     public class XBOX1Controller : Controller
     {
         float elapsed;
@@ -131,6 +147,21 @@ namespace Game1
             if (key.IsButtonUp(Buttons.A))
             {
                 Select = false;
+            }
+
+            if (key.IsButtonDown(Buttons.Back))
+            {
+                if (elapsed > 500)
+                {
+                    elapsed = 0;
+                    Exit = true;
+                }
+                else { Exit = false; }
+            }
+
+            if (key.IsButtonDown(Buttons.Back))
+            {
+                Exit = false;
             }
         }
     }   

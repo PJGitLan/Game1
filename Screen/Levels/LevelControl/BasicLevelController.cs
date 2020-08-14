@@ -3,6 +3,7 @@ using Game1.Screen.Levels.LevelControl;
 using Game1.Screen.MenuItems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,9 +52,16 @@ namespace Game1.Screen.Levels
             Timer.Update(gameTime);
             if (Finish.GoalReached == true)
             {
-                Player.Update(gameTime);
+                //Player.Update(gameTime);
                 lvlReset();
                 Player.Update(gameTime);
+                gameController.Endscreen();
+            }
+
+            if (Player.controller.Exit)
+            {
+                lvlReset();
+                gameController.MainMenu();
             }
         }
 
@@ -63,7 +71,6 @@ namespace Game1.Screen.Levels
             camera.Position = origCameraPos;
             Player.ToSpawn();
             gameController.Score = Timer.Stop();
-            gameController.Endscreen();
         }
     }
 }

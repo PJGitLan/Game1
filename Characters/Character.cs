@@ -13,20 +13,26 @@ namespace Game1
     abstract class Character : ICollidable
     {
         public Vector2 Position { get; private set; }
-        Rectangle collisionRectangle;
         public MovementEngine mover;
         protected AnimationEngine animation;
         private readonly Vector2 origPos;
-
-
-        public Rectangle CollisionRect { get => collisionRectangle; set => collisionRectangle = value; }
-
-        public Character(AnimationEngine animationEngine, MovementEngine mover)
+        public Rectangle CollisionRect { get; set; }
+        int colissionOffsetX;
+        int colissionOffsetY;
+        /// <remarks>
+        /// x and y position of the rectangle object needs to be given relatively to the charachters position
+        /// </remarks>
+        public Character(AnimationEngine animationEngine, MovementEngine mover, Rectangle collisionRectangle )  
         {
-            this.collisionRectangle = new Rectangle((int)Position.X, (int)Position.Y, 60, 64);
+            this.CollisionRect = collisionRectangle; /*new Rectangle((int)Position.X, (int)Position.Y, 60, 64);*/
+            this.colissionOffsetX = collisionRectangle.X;
+            this.colissionOffsetY = collisionRectangle.Y;
+            
             this.mover = mover;
-            this.animation = animationEngine;
             origPos = mover.Position;
+
+            this.animation = animationEngine;
+            
         }
 
         public void ToSpawn()
@@ -36,7 +42,7 @@ namespace Game1
 
         public virtual void Update(GameTime gameTime) //an abstract method forces derived classes to implement it whereas virtual method is optional.
         { 
-            CollisionRect = new Rectangle((int)Position.X, (int)Position.Y, 60, 64);
+            CollisionRect = new Rectangle((int)Position.X + colissionOffsetX, (int)Position.Y + colissionOffsetY, CollisionRect.Width, CollisionRect.Height);
             mover.Update(gameTime, this);
             Position = mover.Position;
             animation.Update(Position, gameTime);

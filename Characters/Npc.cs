@@ -14,7 +14,10 @@ namespace Game1.Characters
         private readonly float directionInterval;
         private readonly float jumpInterval;
 
-        public Npc(AnimationEngine animation, MovementEngine mover, Viewport viewport, float directionInterval, float jumpInterval) : base(animation, mover)
+        /// <remarks>
+        /// x and y position of the rectangle object needs to be given relatively to the charachters position
+        /// </remarks>
+        public Npc(AnimationEngine animation, MovementEngine mover, Rectangle collionRectangle, Viewport viewport, float directionInterval, float jumpInterval) : base(animation, mover, collionRectangle)
         {
             this.viewport = viewport;
             this.directionInterval = directionInterval;

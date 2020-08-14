@@ -65,7 +65,6 @@
     <Compile Include="Screen\MenuItems\ISetStateBehavior.cs" />
     <Compile Include="Screen\MenuItems\EndScreenSetStateBehavior.cs" />
     <Compile Include="Screen\MenuItems\MainMenuSetStateBehavior.cs" />
-    <None Include="Game1.cs.copy" />
     <Compile Include="GameControl\GameController.cs" />
     <Compile Include="Screen\Levels\Finish.cs" />
     <Compile Include="GameControl\GameStateFolder\EndScreenState.cs" />

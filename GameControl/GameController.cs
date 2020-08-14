@@ -2,6 +2,7 @@
 using Game1.Screen;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -68,9 +69,22 @@ namespace Game1.GameControl
             screen = gameState.ScoreScreen(screens);
         }
 
+        public void Exit()
+        {
+            if (gameState == mainMenu)
+            {
+                Game1.self.Exit();
+            }
+
+            if (gameState == level)
+            {
+                MainMenu();
+            }
+        }
         public void Update(GameTime gameTime)
         {
-            //Console.WriteLine(gameState);
+            //Console.WriteLine(gameState);      
+            //Console.WriteLine(gameState);      
             screen.Update(gameTime);
         }
 

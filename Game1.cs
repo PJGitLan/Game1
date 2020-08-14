@@ -32,8 +32,11 @@ namespace Game1
         GameController gameController;
         Song song;
 
+        public static Game1 self;
+
         public Game1()
         {
+            self = this;
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
@@ -98,6 +101,7 @@ namespace Game1
                                     new Vector2(0.40f, 0.40f), // new Vector2(0.42  f, 0.40f),
                                     new Vector2(0.01f, 0.01f), new CollisionHandler(collidablesHandler1)),
                                 keyboard,
+                                new Rectangle(2, 0, 60 , 64),
                                 GraphicsDevice.Viewport);
             
             CollidablesHandler collidablesHandler2 = new CollidablesHandler();
@@ -107,10 +111,11 @@ namespace Game1
                                 new Vector2(0.40f, 0.40f),
                                 new Vector2(0.01f, 0.01f), new CollisionHandler(collidablesHandler2)),
                                 keyboard,
+                                new Rectangle(2, 0, 60, 64),
                                 GraphicsDevice.Viewport);
 
             //Level1
-            Finish finish1 = new Finish(new Block(new Vector2(2250, 280), Content.Load<Texture2D>("cheeseburger")), player1);
+            Finish finish1 = new Finish(new Block(new Vector2(2450, 280), Content.Load<Texture2D>("cheeseburger")), player1);
             Level level1 = new Level1(blocksLevel1, collidablesHandler1);
             LevelController levelController1 = new BasicLevelController(player1, finish1, level1, gameController, camera);
 
@@ -133,6 +138,7 @@ namespace Game1
                             new Vector2(0.50f, 0.40f),
                             new Vector2(0.01f, 0.01f), new CollisionHandler(collidablesHandler2)
                         ),
+                        new Rectangle(5, -2, 54 , 60),
                         GraphicsDevice.Viewport,
                         3000,
                         5000
@@ -144,6 +150,7 @@ namespace Game1
                             new Vector2(0.40f, 0.40f),
                             new Vector2(0.01f, 0.01f), new CollisionHandler(collidablesHandler2)
                         ),
+                        new Rectangle(5, -2, 54 , 60),
                         GraphicsDevice.Viewport,
                         6000,
                         5000
@@ -187,9 +194,6 @@ namespace Game1
         
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-            Exit();
-
             elapsed += gameTime.ElapsedGameTime.Milliseconds;
 
             if (elapsed > 2000)

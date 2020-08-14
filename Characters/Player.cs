@@ -10,10 +10,13 @@ namespace Game1
 {
     class Player : Character
     {
-        Controller controller;
+        public Controller controller { get; private set; }
         Viewport viewport;
-        
-        public Player( AnimationEngine animation, MovementEngine mover, Controller controller, Viewport viewport) :base( animation, mover)
+
+        /// <remarks>
+        /// x and y position of the rectangle object needs to be given relatively to the charachters position
+        /// </remarks>
+        public Player( AnimationEngine animation, MovementEngine mover, Controller controller, Rectangle collisionRectangle, Viewport viewport) :base( animation, mover, collisionRectangle)
         {
             this.controller = controller;
             this.viewport = viewport;

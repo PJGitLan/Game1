@@ -81,6 +81,11 @@ namespace Game1
                 LevelChosen = levelSelected+1;
                 StateBehavior.SetState(LevelChosen, gameController);
             }
+
+            if (controller.Exit)
+            {
+                gameController.Exit();
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)
