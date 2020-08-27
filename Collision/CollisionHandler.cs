@@ -18,7 +18,7 @@ namespace Game1.Collision
 
         public void CollisionCheck(Character character)
         {
-            var ch = character.mover;
+            var ch = character.Mover;
             List<ICollidable> tmp;
             tmp = colliders.CheckCollider(character);
 

@@ -10,16 +10,14 @@ namespace Game1.Characters
 {
     class Npc : Character
     {
-        Viewport viewport;
         private readonly float directionInterval;
         private readonly float jumpInterval;
 
         /// <remarks>
         /// x and y position of the rectangle object needs to be given relatively to the charachters position
         /// </remarks>
-        public Npc(AnimationEngine animation, MovementEngine mover, Rectangle collionRectangle, Viewport viewport, float directionInterval, float jumpInterval) : base(animation, mover, collionRectangle)
+        public Npc(AnimationEngine animation, MovementEngine mover, Rectangle collionRectangle, float directionInterval, float jumpInterval) : base(animation, mover, collionRectangle)
         {
-            this.viewport = viewport;
             this.directionInterval = directionInterval;
             this.jumpInterval = jumpInterval;
         }
@@ -30,22 +28,17 @@ namespace Game1.Characters
 
             if (gameTime.TotalGameTime.TotalMilliseconds % directionInterval * 2 >= directionInterval)
             {
-                mover.MoveLeft();
+                Mover.MoveLeft();
             }
 
             if (gameTime.TotalGameTime.TotalMilliseconds % directionInterval * 2 < directionInterval)
             {
-                mover.MoveRight();
+                Mover.MoveRight();
             }
 
-            if (gameTime.TotalGameTime.TotalMilliseconds % jumpInterval == 0) //Should not work yet
+            if (gameTime.TotalGameTime.TotalMilliseconds % jumpInterval * 2 > jumpInterval) 
             {
-                mover.MoveUp();
-            }
-
-            if (Position.Y > viewport.Bounds.Bottom + 50)
-            {
-                ToSpawn();
+                Mover.MoveUp();
             }
         }
     }

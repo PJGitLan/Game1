@@ -35,7 +35,6 @@ namespace Game1
                 File.Create(location).Close();
             }
             return File.ReadAllLines(location);
-            //@"%USERPROFILE%\Documents\speedRunner\topScores.txt");
         }
         private List<string[]> ReadFile() //reads file and puts it in list object
         {

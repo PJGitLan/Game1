@@ -47,7 +47,7 @@ namespace Game1.Screen.Levels
         {
             Level.Update(gameTime);
             Player.Update(gameTime);
-            camera.Update(Player.Position);
+            camera.Update(Player.Mover.Position);
             Finish.Update();
             Timer.Update(gameTime);
             if (Finish.GoalReached == true)
@@ -69,7 +69,7 @@ namespace Game1.Screen.Levels
         {
             //Console.WriteLine("reset level");
             camera.Position = origCameraPos;
-            Player.ToSpawn();
+            Player.Mover.ToSpawn();
             gameController.Score = Timer.Stop();
         }
     }

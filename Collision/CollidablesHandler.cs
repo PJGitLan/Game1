@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Game1
 {
-    class CollidablesHandler // Should it be a static or regular function?
+    class CollidablesHandler
     {
         List<ICollidable> collidables = new List<ICollidable>();
 

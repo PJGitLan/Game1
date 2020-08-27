@@ -10,13 +10,15 @@ namespace Game1
 {
     class AnimationEngine //Indien meerder animaties nodig zijn zoals boven, onder, leven kwijt geraken etc... Klasse abstract maken
     {
-        public Texture2D Texture { get; private set; }
+        private Texture2D Texture { get; set; } //public Texture2D Texture { get; private set; }
         Texture2D textureLeft;
         Texture2D textureRight;
-        public int FramePostion { get; private set; }
+        private int FramePostion { get; set; } //public int FramePostion { get; private set; }
         int frameWidth;
         int framesAmount;
+        
         Vector2 prevPosition;
+        
         float animationTime;
 
         public AnimationEngine(Texture2D textureRight, Texture2D textureLeft, int frameWidth, int framesAmount)
@@ -71,8 +73,12 @@ namespace Game1
             {
                 GetMovement(position);
                 animationTime = 0;
-            }
-                
+            }   
+        }
+
+        public void Draw(SpriteBatch spriteBatch, Vector2 position)
+        {
+            spriteBatch.Draw(Texture, new Vector2((int)position.X, (int)position.Y), new Rectangle(FramePostion, 0, 64, 64), Color.White);
         }
     }
 }

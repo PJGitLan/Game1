@@ -1,5 +1,6 @@
 ﻿using Game1.Collision;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,11 +12,14 @@ namespace Game1
 {
     class MovementEngine
     {
-        //properties private maken
-        public Vector2 maxVelocity { get; set; } 
+        private Vector2 maxVelocity { get; set; } 
         public Vector2 Position { get; set; }
+        private readonly Vector2 origPos;
+
         public Vector2 Velocity { get; set; } 
-        public Vector2 Acceleration { get; set; }
+        private Vector2 Acceleration { get; set; }
+
+        Viewport viewport;
 
         CollisionHandler collisionHandler;
 
@@ -24,12 +28,20 @@ namespace Game1
         float deltaTime;
         float timeSinceJump;
 
-        public MovementEngine(Vector2 position, Vector2 maxVelocity, Vector2 acceleration, CollisionHandler collisionHandler)
+        public MovementEngine(Vector2 position, Vector2 maxVelocity, Vector2 acceleration, Viewport viewport, CollisionHandler collisionHandler)
         {
             Position = position;
+            origPos = Position;
             this.maxVelocity = maxVelocity;
             Acceleration = acceleration;
+            this.viewport = viewport;
             this.collisionHandler = collisionHandler;
+        }
+
+        public void ToSpawn()
+        {
+            Position = origPos;
+            //Velocity = new Vector2(0, 0);
         }
 
         public void MoveLeft()
@@ -55,11 +67,10 @@ namespace Game1
 
         public void MoveDown()
         {
-            
                 Velocity = new Vector2(Velocity.X, Velocity.Y + Acceleration.Y * deltaTime);   
         }
 
-        public void UpdatePosition(Character character)
+        private void UpdatePosition(Character character)
         {
             SpeedCheck();
 
@@ -82,6 +93,11 @@ namespace Game1
             collisionHandler.CollisionCheck(character); 
 
             Position = Position + Velocity * deltaTime;
+
+            if (Position.Y > viewport.Bounds.Bottom + 50)
+            {
+                ToSpawn();
+            }
         }
 
         private void SpeedCheck()
@@ -112,7 +128,6 @@ namespace Game1
             deltaTime = gameTime.ElapsedGameTime.Milliseconds;
             timeSinceJump += 20;
             UpdatePosition(character);
-          
         }
     }
 

@@ -94,25 +94,30 @@ namespace Game1
             List<SpriteFont> fonts = new List<SpriteFont>() { Content.Load<SpriteFont>("titelFont"),
                                              Content.Load<SpriteFont>("selectedFont"), 
                                              Content.Load<SpriteFont>("regularFont") };
+            
+            //player lvl1
             CollidablesHandler collidablesHandler1 = new CollidablesHandler();
             
             Player player1 = new Player(new AnimationEngine(walkingFatManRight, walkingFatManLeft, 64, 8), //should this be in constructor. should I set picture on the class itself etc
                                 new MovementEngine(new Vector2(200, 300),
                                     new Vector2(0.40f, 0.40f), // new Vector2(0.42  f, 0.40f),
-                                    new Vector2(0.01f, 0.01f), new CollisionHandler(collidablesHandler1)),
+                                    new Vector2(0.01f, 0.01f),
+                                    GraphicsDevice.Viewport,
+                                    new CollisionHandler(collidablesHandler1)),
                                 keyboard,
-                                new Rectangle(2, 0, 60 , 64),
-                                GraphicsDevice.Viewport);
+                                new Rectangle(2, 0, 60 , 64));
             
             CollidablesHandler collidablesHandler2 = new CollidablesHandler();
 
+            //player lvl2
             Player player2 = new Player(new AnimationEngine(walkingFatManRight, walkingFatManLeft, 64, 8), //should this be in constructor. should I set picture on the class itself etc
                                 new MovementEngine(new Vector2(200, 200),
-                                new Vector2(0.40f, 0.40f),
-                                new Vector2(0.01f, 0.01f), new CollisionHandler(collidablesHandler2)),
+                                    new Vector2(0.40f, 0.40f),
+                                    new Vector2(0.01f, 0.01f),
+                                    GraphicsDevice.Viewport,
+                                    new CollisionHandler(collidablesHandler2)),
                                 keyboard,
-                                new Rectangle(2, 0, 60, 64),
-                                GraphicsDevice.Viewport);
+                                new Rectangle(2, 0, 60, 64));
 
             //Level1
             Finish finish1 = new Finish(new Block(new Vector2(2450, 280), Content.Load<Texture2D>("cheeseburger")), player1);
@@ -136,22 +141,24 @@ namespace Game1
                         new MovementEngine(
                             new Vector2(800, 20),
                             new Vector2(0.50f, 0.40f),
-                            new Vector2(0.01f, 0.01f), new CollisionHandler(collidablesHandler2)
+                            new Vector2(0.01f, 0.01f),
+                            GraphicsDevice.Viewport,
+                            new CollisionHandler(collidablesHandler2)
                         ),
                         new Rectangle(5, -2, 54 , 60),
-                        GraphicsDevice.Viewport,
                         3000,
-                        5000
+                        0
                     ),
                  new Npc(
                         new AnimationEngine(GreenHoodR, GreenHoodL, 64, 8),
                         new MovementEngine(
                             new Vector2(1400, 200),
                             new Vector2(0.40f, 0.40f),
-                            new Vector2(0.01f, 0.01f), new CollisionHandler(collidablesHandler2)
+                            new Vector2(0.01f, 0.01f),
+                            GraphicsDevice.Viewport,
+                            new CollisionHandler(collidablesHandler2)
                         ),
                         new Rectangle(5, -2, 54 , 60),
-                        GraphicsDevice.Viewport,
                         6000,
                         5000
                     )
@@ -200,7 +207,7 @@ namespace Game1
             {
                 RandomColorGenerator.Next();
                 elapsed = 0;
-            }
+            } //niet statische klasse van maken met eigen update en draw
 
             gameController.Update(gameTime);
 

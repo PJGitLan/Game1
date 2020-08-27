@@ -11,15 +11,13 @@ namespace Game1
     class Player : Character
     {
         public Controller controller { get; private set; }
-        Viewport viewport;
 
         /// <remarks>
         /// x and y position of the rectangle object needs to be given relatively to the charachters position
         /// </remarks>
-        public Player( AnimationEngine animation, MovementEngine mover, Controller controller, Rectangle collisionRectangle, Viewport viewport) :base( animation, mover, collisionRectangle)
+        public Player( AnimationEngine animation, MovementEngine mover, Controller controller, Rectangle collisionRectangle) :base( animation, mover, collisionRectangle)
         {
             this.controller = controller;
-            this.viewport = viewport;
         }
 
         public override void Update(GameTime gameTime) //1 klasse die link tussen controller en klasse doet
@@ -29,22 +27,17 @@ namespace Game1
             
             if (controller.Left)
             {
-                mover.MoveLeft();
+                Mover.MoveLeft();
             }
 
             if (controller.Right)
             {
-               mover.MoveRight();
+               Mover.MoveRight();
             }
 
             if (controller.Up)
             {
-                 mover.MoveUp();
-            }
-
-            if(Position.Y > viewport.Bounds.Bottom + 50)
-            {
-                ToSpawn();
+                 Mover.MoveUp();
             }
         }
     }

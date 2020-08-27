@@ -53,7 +53,7 @@ namespace Game1.Screen.Levels
             }
             if (collidablesHandler.CheckCollider(levelController.Player).Count > 0)
             {
-                Player.ToSpawn();
+                Player.Mover.ToSpawn();
             }
         }
 
@@ -61,7 +61,7 @@ namespace Game1.Screen.Levels
         {
             foreach (var item in npcs)
             {
-                item.ToSpawn();
+                item.Mover.ToSpawn();
             }
             base.lvlReset();
         }

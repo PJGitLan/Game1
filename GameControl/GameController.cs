@@ -17,7 +17,7 @@ namespace Game1.GameControl
         public int Lvl { get; set; }
         public double Score { get; set; }
 
-        public readonly string Path = @"C:\speedRunner";
+        public readonly string Path = @"C:\speedRunner"; // Mischien beter omdit niet hardcoded te hebben zodat gamecontroller niet altijd naar zelfde locatie moet opslagen
         public readonly string FileName = @"topScores.txt";
        
         public IGameState mainMenu { get; set; }
