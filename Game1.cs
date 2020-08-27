@@ -70,6 +70,7 @@ namespace Game1
         {
             // Music from: https://www.fesliyanstudios.com/royalty-free-music/downloads-c/8-bit-music/6
             song = Content.Load<Song>("8bitMusic");
+            MediaPlayer.IsRepeating = true;
             MediaPlayer.Play(song);
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);

@@ -53,7 +53,7 @@ namespace Game1
                 }
                 else
                 {
-                    Console.WriteLine("should not be here");
+                    //Console.WriteLine("should not be here");
 
                     if (!(allScores.Length<=i))
                     {                      

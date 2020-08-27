@@ -31,7 +31,7 @@ namespace Game1
 
             if (!File.Exists(location))
             {
-                Console.WriteLine(location);
+                //Console.WriteLine(location);
                 File.Create(location).Close();
             }
             return File.ReadAllLines(location);
@@ -58,7 +58,7 @@ namespace Game1
             }
             else
             {
-                Console.WriteLine("lvlNr: " +lvlNr);
+                //Console.WriteLine("lvlNr: " +lvlNr);
                 array = list[lvlNr];
             }
             

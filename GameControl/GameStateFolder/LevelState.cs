@@ -43,7 +43,7 @@ namespace Game1.GameControl.GameStateFolder
 
         public IScreen MainMenu(List<IScreen> screens)
         {
-            Console.WriteLine("exiting level without completion");
+            //Console.WriteLine("exiting level without completion");
             gameController.gameState = gameController.mainMenu;
             return screens[screens.Count - 2];
         }

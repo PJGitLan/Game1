@@ -33,7 +33,7 @@ namespace Game1.GameControl.GameStateFolder
                 LevelController temp = (LevelController)screens[levelnr - 1];
                 gameController.Lvl = levelnr;
                 temp.Timer.Start();
-                Console.WriteLine("Timer started");
+                //Console.WriteLine("Timer started");
 
                 screens[levelnr - 1] = temp;
             }
